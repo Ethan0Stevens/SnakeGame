@@ -26,7 +26,7 @@ public class Fruit {
 
         // Place le fruit a une position aléatoire sur un des carré de jeu
         image.setX(((int)(Math.random() * (screenWidth-100)/64) * 64));
-        image.setY(((int)(Math.random() * (screenHeight-50)/64) * 64) + 10);
+        image.setY(((int)(Math.random() * (screenHeight-100)/64) * 64) + 10);
 
         // Placer l'image sur le layout
         constraintLayout = activity.findViewById(R.id.gameLayout);

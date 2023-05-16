@@ -26,16 +26,16 @@ public class Snake {
         if (moveCouldown <= 0) {
 
             if (Math.abs(x) > Math.abs(y)) {
-                if (x > 1)
+                if (x > 3)
                     currentMove = "up";
-                else if (x < -1)
+                else if (x < -3)
                     currentMove = "down";
                 else
                     currentMove = lastMove;
             } else {
-                if (y < -1)
+                if (y < -3)
                     currentMove = "right";
-                else if (y > 1)
+                else if (y > 3)
                     currentMove = "left";
                 else
                     currentMove = lastMove;
