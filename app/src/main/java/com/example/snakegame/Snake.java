@@ -37,6 +37,7 @@ public class Snake {
             }
             updateMovement(currentMove);
             lastMove = currentMove;
+            updateRotation();
         }
     }
 
@@ -63,12 +64,29 @@ public class Snake {
                 break;
         }
         checkCollisions(activity);
+
         moveCouldown--;
     }
-
     public void resetMove() {
         currentMove = "";
         moveCouldown = 5;
+    }
+
+    public void updateRotation() {
+        switch (currentMove) {
+            case "up":
+                image.setRotation(180);
+                break;
+            case "down":
+                image.setRotation(0);
+                break;
+            case "left":
+                image.setRotation(90);
+                break;
+            case "right":
+                image.setRotation(270);
+                break;
+        }
     }
 
     public void updateMovement(String move) {
