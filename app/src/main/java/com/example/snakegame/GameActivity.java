@@ -120,6 +120,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Verifie les collision avec les bords de l'écran
+     */
     public void checkCollisions() {
         // Récupérer les dimensions de l'écran
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -127,6 +130,7 @@ public class GameActivity extends AppCompatActivity {
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
+        // Met fin a l'activité si le snake touche un mure
         if (starImg.getX() <= 0 || starImg.getX() >= screenWidth - starImg.getWidth() || starImg.getY() <= 0 || starImg.getY() >= screenHeight - starImg.getHeight())
             finish();
     }
