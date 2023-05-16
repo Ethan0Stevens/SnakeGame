@@ -49,8 +49,22 @@ public class GameActivity extends AppCompatActivity {
         sensorManager.registerListener(sensorListener, gravity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    public void moveSnake() {
+    public void moveSnake(float x, float y) {
+        boolean moveRight = false;
+        boolean moveLeft = false;
+        boolean moveUp = false;
+        boolean moveDown = false;
 
+        moveUp = x > 0;
+        moveDown = x < 0;
+        moveRight = y < 0;
+        moveLeft = y > 0;
+
+        if (moveUp) {
+            starImg.setY(starImg.getY() + 5);
+        } else if (moveDown) {
+            starImg.setY(starImg.getY() - 5);
+        }
     }
 
     /**
@@ -75,10 +89,10 @@ public class GameActivity extends AppCompatActivity {
             int screenHeight = displayMetrics.heightPixels;
 
             // Mise a jour de la position de l'étoile
-            starImg.setY(Math.max(Math.min(x * screenHeight/2f/10f + screenHeight/2f - starImg.getHeight()/2f, screenHeight - starImg.getHeight()), 0));
-            starImg.setX(Math.max(Math.min(y * screenWidth/2f/10f + screenWidth/2f - starImg.getWidth()/2f, screenWidth - starImg.getWidth()), 0));
+            // starImg.setY(Math.max(Math.min(x * screenHeight/2f/10f + screenHeight/2f - starImg.getHeight()/2f, screenHeight - starImg.getHeight()), 0));
+            // starImg.setX(Math.max(Math.min(y * screenWidth/2f/10f + screenWidth/2f - starImg.getWidth()/2f, screenWidth - starImg.getWidth()), 0));
 
-            moveSnake();
+            moveSnake(x, y);
         }
     };
 
