@@ -89,17 +89,12 @@ public class GameActivity extends AppCompatActivity {
             snake.moveSnake(x, y, activity);
 
             if (snake.getRect().intersect(fruit.getRect())) {
-                Log.i("TAG", "Mangegegegegegegegegeg");
-
+                fruit.delete();
                 fruit = new Fruit(activity);
             }
 
             if (snake.isDead())
                 endGame();
-
-            ReclangleView rectangleView = new ReclangleView(activity, fruit.getRect());
-            ConstraintLayout constraintLayout = activity.findViewById(R.id.gameLayout);
-            constraintLayout.addView(rectangleView);
         }
     };
 

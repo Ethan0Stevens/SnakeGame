@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class Fruit {
     ImageView image;
     Rect rect;
+    ConstraintLayout constraintLayout;
     public Fruit(Activity activity) {
         image = new ImageView(activity);
         image.setImageResource(R.drawable.devil_fruit);
@@ -28,15 +29,17 @@ public class Fruit {
         image.setY(((int)(Math.random() * (screenHeight-50)/64) * 64) + 10);
 
         // Placer l'image sur le layout
-        ConstraintLayout constraintLayout = activity.findViewById(R.id.gameLayout);
+        constraintLayout = activity.findViewById(R.id.gameLayout);
         constraintLayout.addView(image);
-
-        //rect = new Rect((int) image.getX() + 96, (int) image.getY() + 96, (int) (image.getX() + 32), (int) (image.getY() + 32));
 
         rect = new Rect((int) image.getX() + 40, (int) image.getY() + 40, (int) (image.getX() + 90), (int) (image.getY() + 90));
     }
 
     public Rect getRect() {
         return rect;
+    }
+
+    public void delete() {
+        constraintLayout.removeView(image);
     }
 }
