@@ -1,9 +1,8 @@
 package com.example.snakegame;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 
 public class Snake {
@@ -12,9 +11,14 @@ public class Snake {
     String lastMove = currentMove;
     int moveCouldown = 0;
     boolean dead = false;
+    Rect rect;
 
     public Snake(ImageView snakeImg) {
         image = snakeImg;
+    }
+
+    public Rect getRect() {
+        return rect;
     }
 
     public void getCurrentMove(float x, float y) {
@@ -119,6 +123,8 @@ public class Snake {
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
+
+        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
 
         // Si le serpent touche un murs alors il meurt
         if (image.getX() <= 0 || image.getX() >= screenWidth - image.getWidth() || image.getY() <= 0 || image.getY() >= screenHeight - image.getHeight()) {

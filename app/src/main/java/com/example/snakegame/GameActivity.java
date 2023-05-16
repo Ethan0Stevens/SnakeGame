@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -33,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     Snake snake;
 
     Activity activity;
+    Fruit fruit;
 
     /**
      * Code éxectué a la creation de l'application
@@ -50,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
 
         snake = new Snake(findViewById(R.id.snakeImg));
 
-        new Fruit(this);
+        fruit = new Fruit(this);
     }
 
     public void endGame() {
@@ -85,6 +87,13 @@ public class GameActivity extends AppCompatActivity {
             float y = event.values[1];
 
             snake.moveSnake(x, y, activity);
+
+            Log.i("TAG", String.valueOf(fruit.getRect()));
+
+            if (Rect.intersects(snake.getRect(), fruit.getRect())) {
+                fruit = new Fruit(activity);
+            }
+
             if (snake.isDead())
                 endGame();
         }
