@@ -3,6 +3,7 @@ package com.example.snakegame;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,7 +15,7 @@ public class Fruit {
         image = new ImageView(activity);
         image.setImageResource(R.drawable.devil_fruit);
         image.setScaleX(0.5F);
-        image.setScaleY(0.5F);
+        image.setScaleY(0.5f);
 
         // Récupérer la taille de l'écran
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -24,13 +25,15 @@ public class Fruit {
 
         // Place le fruit a une position aléatoire sur un des carré de jeu
         image.setX(((int)(Math.random() * (screenWidth-100)/64) * 64));
-        image.setY(((int)(Math.random() * (screenHeight-50)/64) * 64));
+        image.setY(((int)(Math.random() * (screenHeight-50)/64) * 64) + 10);
 
         // Placer l'image sur le layout
         ConstraintLayout constraintLayout = activity.findViewById(R.id.gameLayout);
         constraintLayout.addView(image);
 
-        rect = new Rect((int) image.getX() - image.getWidth(), (int) image.getY() - image.getHeight(), (int) (image.getX()), (int) (image.getY()));
+        //rect = new Rect((int) image.getX() + 96, (int) image.getY() + 96, (int) (image.getX() + 32), (int) (image.getY() + 32));
+
+        rect = new Rect((int) image.getX() + 40, (int) image.getY() + 40, (int) (image.getX() + 90), (int) (image.getY() + 90));
     }
 
     public Rect getRect() {

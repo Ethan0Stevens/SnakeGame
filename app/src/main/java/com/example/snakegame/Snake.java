@@ -15,6 +15,7 @@ public class Snake {
 
     public Snake(ImageView snakeImg) {
         image = snakeImg;
+        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
     public Rect getRect() {
