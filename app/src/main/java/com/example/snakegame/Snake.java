@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class Snake {
     ImageView image;
     String currentMove = "up";
@@ -12,14 +14,21 @@ public class Snake {
     int moveCouldown = 0;
     boolean dead = false;
     Rect rect;
+    ArrayList<SnakeBody> snakeBodies = new ArrayList<>();
+    Activity activity;
 
-    public Snake(ImageView snakeImg) {
+    public Snake(ImageView snakeImg, Activity newActivity) {
+        activity = newActivity;
         image = snakeImg;
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
     public Rect getRect() {
         return rect;
+    }
+
+    public void addBody() {
+        snakeBodies.add(new SnakeBody(activity, this, snakeBodies.size()));
     }
 
     public void getCurrentMove(float x, float y) {
@@ -67,6 +76,9 @@ public class Snake {
                 break;
             default:
                 break;
+        }
+        for (SnakeBody body : snakeBodies) {
+            body.updatePosition();
         }
         checkCollisions(activity);
 

@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
         // Initialisation des varibles
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-        snake = new Snake(findViewById(R.id.snakeImg));
+        snake = new Snake(findViewById(R.id.snakeImg), this);
         fruit = new Fruit(this);
     }
 
@@ -71,7 +71,7 @@ public class GameActivity extends AppCompatActivity {
             if (snake.getRect().intersect(fruit.getRect())) {
                 fruit.delete();
                 fruit = new Fruit(activity);
-                new SnakeBody(activity, snake);
+                snake.addBody();
             }
 
             if (snake.isDead())
