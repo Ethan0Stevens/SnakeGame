@@ -9,7 +9,7 @@
     android:background="@drawable/background">
 
     <ImageView
-        android:id="@+id/starImg"
+        android:id="@+id/snakeImg"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:importantForAccessibility="no"
