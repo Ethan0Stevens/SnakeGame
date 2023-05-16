@@ -45,19 +45,19 @@ public class Snake {
         getCurrentMove(x, y);
         switch (currentMove) {
             case "up":
-                image.setY(image.getY() + image.getWidth()/2f);
+                image.setY(image.getY() + image.getWidth());
                 resetMove();
                 break;
             case "down":
-                image.setY(image.getY() - image.getWidth()/2f);
+                image.setY(image.getY() - image.getWidth());
                 resetMove();
                 break;
             case "right":
-                image.setX(image.getX() - image.getWidth()/2f);
+                image.setX(image.getX() - image.getWidth());
                 resetMove();
                 break;
             case "left":
-                image.setX(image.getX() + image.getWidth()/2f);
+                image.setX(image.getX() + image.getWidth());
                 resetMove();
                 break;
             default:
@@ -69,7 +69,7 @@ public class Snake {
     }
     public void resetMove() {
         currentMove = "";
-        moveCouldown = 5;
+        moveCouldown = 7;
     }
 
     public void updateRotation() {

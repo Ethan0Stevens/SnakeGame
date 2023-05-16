@@ -14,9 +14,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +49,8 @@ public class GameActivity extends AppCompatActivity {
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 
         snake = new Snake(findViewById(R.id.snakeImg));
+
+        new Fruit(this);
     }
 
     public void endGame() {
