@@ -2,6 +2,7 @@ package com.example.snakegame;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -23,6 +25,9 @@ public class GameActivity extends AppCompatActivity {
 
     SensorManager sensorManager;
     Sensor gravity;
+    String currentMove = "up";
+    String lastMove = null;
+    int moveCouldown = 0;
 
     /**
      * Code éxectué a la creation de l'application
@@ -50,21 +55,80 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void moveSnake(float x, float y) {
-        boolean moveRight = false;
-        boolean moveLeft = false;
-        boolean moveUp = false;
-        boolean moveDown = false;
+        if (moveCouldown <= 0) {
 
-        moveUp = x > 0;
-        moveDown = x < 0;
-        moveRight = y < 0;
-        moveLeft = y > 0;
-
-        if (moveUp) {
-            starImg.setY(starImg.getY() + 5);
-        } else if (moveDown) {
-            starImg.setY(starImg.getY() - 5);
+            if (Math.abs(x) > Math.abs(y)) {
+                if (x > 0)
+                    currentMove = "up";
+                if (x < 0)
+                    currentMove = "down";
+            } else {
+                if (y < 0)
+                    currentMove = "right";
+                if (y > 0)
+                    currentMove = "left";
+            }
+            updateMovement(currentMove);
+            lastMove = currentMove;
         }
+
+
+        switch (currentMove) {
+            case "up":
+                starImg.setY(starImg.getY() + starImg.getWidth()/2f);
+                currentMove = "";
+                moveCouldown = 15;
+                break;
+            case "down":
+                starImg.setY(starImg.getY() - starImg.getWidth()/2f);
+                currentMove = "";
+                moveCouldown = 15;
+                break;
+            case "right":
+                starImg.setX(starImg.getX() - starImg.getWidth()/2f);
+                currentMove = "";
+                moveCouldown = 15;
+                break;
+            case "left":
+                starImg.setX(starImg.getX() + starImg.getWidth()/2f);
+                currentMove = "";
+                moveCouldown = 15;
+                break;
+            default:
+                break;
+        }
+
+        checkCollisions();
+
+        moveCouldown--;
+    }
+
+    public void updateMovement(String move) {
+        if (!(lastMove == null)) {
+            if (move.equals("up") && lastMove.equals("down")) {
+                currentMove = "down";
+            }
+            if (move.equals("down") && lastMove.equals("up")) {
+                currentMove = "up";
+            }
+            if (move.equals("right") && lastMove.equals("left")) {
+                currentMove = "left";
+            }
+            if (move.equals("left") && lastMove.equals("right")) {
+                currentMove = "right";
+            }
+        }
+    }
+
+    public void checkCollisions() {
+        // Récupérer les dimensions de l'écran
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        if (starImg.getX() <= 0 || starImg.getX() >= screenWidth - starImg.getWidth() || starImg.getY() <= 0 || starImg.getY() >= screenHeight - starImg.getHeight())
+            finish();
     }
 
     /**
@@ -81,16 +145,6 @@ public class GameActivity extends AppCompatActivity {
             // Récuperer les valeurs du capteur de gravité
             float x = event.values[0];
             float y = event.values[1];
-
-            // Récupérer les dimensions de l'écran
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            int screenWidth = displayMetrics.widthPixels;
-            int screenHeight = displayMetrics.heightPixels;
-
-            // Mise a jour de la position de l'étoile
-            // starImg.setY(Math.max(Math.min(x * screenHeight/2f/10f + screenHeight/2f - starImg.getHeight()/2f, screenHeight - starImg.getHeight()), 0));
-            // starImg.setX(Math.max(Math.min(y * screenWidth/2f/10f + screenWidth/2f - starImg.getWidth()/2f, screenWidth - starImg.getWidth()), 0));
 
             moveSnake(x, y);
         }
