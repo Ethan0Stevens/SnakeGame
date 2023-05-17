@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SnakeGame</string>
     <string name="startBtn">Start</string>
+    <string name="text_0">0</string>
+    <string name="red">red</string>
+    <string name="blue">blue</string>
+    <string name="green">green</string>
 </resources>

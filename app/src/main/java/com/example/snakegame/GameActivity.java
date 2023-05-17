@@ -3,11 +3,16 @@ package com.example.snakegame;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -24,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<Fruit> fruits = new ArrayList<>();
 
     TextView scoreText;
+    ConstraintLayout constraintLayout;
 
     /**
      * Code éxectué a la creation de l'activité
@@ -33,21 +39,32 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        activity = this;
 
         // Initialisation des varibles
+        activity = this;
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        scoreText = findViewById(R.id.scoreText);
+        constraintLayout = findViewById(R.id.gameOver);
+
         snake = new Snake(findViewById(R.id.snakeImg), this);
         fruits.add(new Fruit(this));
+        constraintLayout.setVisibility(View.INVISIBLE);
+    }
 
-        scoreText = findViewById(R.id.scoreText);
+    public void reloadGame(View view) {
+        recreate();
     }
 
     /**
      * Met fin à l'activité
      */
     public void endGame() {
+        constraintLayout.setZ(10);
+        constraintLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void exitActivity(View view) {
         finish();
     }
 
@@ -140,9 +157,9 @@ public class GameActivity extends AppCompatActivity {
             float x = event.values[0];
             float y = event.values[1];
 
-            updateSnake(x, y);
+            if (!snake.isDead())
+                updateSnake(x, y);
         }
     };
-
 }
 

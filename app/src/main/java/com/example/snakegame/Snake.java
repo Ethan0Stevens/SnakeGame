@@ -120,7 +120,7 @@ public class Snake {
     public void resetMove() {
         updateRotation();
         currentMove = "";
-        moveCouldown = 7 - (snakeBodies.size()-1) / 8;
+        moveCouldown = 7 - (snakeBodies.size()-1) / 6;
     }
 
     /**
