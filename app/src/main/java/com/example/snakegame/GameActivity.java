@@ -13,12 +13,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor gravity;
     Snake snake;
     Activity activity;
-    Fruit fruit;
+    ArrayList<Fruit> fruits = new ArrayList<>();
 
     /**
      * Code éxectué a la creation de l'activité
@@ -34,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         snake = new Snake(findViewById(R.id.snakeImg), this);
-        fruit = new Fruit(this);
+        fruits.add(new Fruit(this));
     }
 
     /**
@@ -73,11 +75,24 @@ public class GameActivity extends AppCompatActivity {
      * et ajouter une partie du corps au serpent
      */
     public void checkCollisionWithFruit() {
-        if (snake.getRect().intersect(fruit.getRect())) {
-            fruit.delete();
-            fruit = new Fruit(activity);
-            snake.addBody();
+        ArrayList<Fruit> fruitsToRemove = new ArrayList<>();
+        for (Fruit fruit : fruits) {
+            if (snake.getRect().intersect(fruit.getRect())) {
+                fruit.delete();
+                fruitsToRemove.add(fruit);
+                snake.addBody(); // Ajouter une partie du corps au serpent
+            }
         }
+        for (Fruit fruit : fruitsToRemove) {
+            fruits.remove(fruit);
+
+            // Ajouter un nouveau fruit a la liste des fruits
+            if (fruits.size() <= 0) {
+                fruits.add(new Fruit(activity));
+            }
+            fruits.add(new Fruit(activity));
+        }
+
     }
 
     /**
