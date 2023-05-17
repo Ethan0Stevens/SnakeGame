@@ -26,6 +26,9 @@ public class Snake {
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
+    /**
+     * Retourne le rectangle de collision
+     */
     public Rect getRect() {
         return rect;
     }
