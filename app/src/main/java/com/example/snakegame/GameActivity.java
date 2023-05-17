@@ -17,12 +17,11 @@ public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor gravity;
     Snake snake;
-
     Activity activity;
     Fruit fruit;
 
     /**
-     * Code éxectué a la creation de l'application
+     * Code éxectué a la creation de l'activité
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +37,66 @@ public class GameActivity extends AppCompatActivity {
         fruit = new Fruit(this);
     }
 
+    /**
+     * Met fin à l'activité
+     */
     public void endGame() {
         finish();
     }
 
     /**
-     * Code éxecuté régulierement lors du fonctionement de l'application
+     * onResume de GameActivity
      */
     public void onResume() {
         super.onResume();
 
         // Appeler l'ecoute du capteur de gravité
         sensorManager.registerListener(sensorListener, gravity, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    /**
+     * Met à jour tout ce qui concerne le fonctionnement du serpent
+     * @param x la nouvelle posision x du serpent
+     * @param y la nouvelle posision Y du serpent
+     */
+    public void updateSnake(float x, float y) {
+        snake.moveSnake(x, y, activity);
+        checkCollisionWithFruit();
+        checkCollisionWithBodies();
+        verifiyIsSnakeAlive();
+    }
+
+
+    /**
+     * Vérifie les collision entre le serpent et le fruit
+     * Si il y a collision, alors supprimer le fruit touché, ajouter un nouveau fruit
+     * et ajouter une partie du corps au serpent
+     */
+    public void checkCollisionWithFruit() {
+        if (snake.getRect().intersect(fruit.getRect())) {
+            fruit.delete();
+            fruit = new Fruit(activity);
+            snake.addBody();
+        }
+    }
+
+    /**
+     * Verifie les collisions entre la tete du serpent et les partie du corp
+     * Si il y a une collision, alors tuer le serpent
+     */
+    public void checkCollisionWithBodies() {
+        for (SnakeBody body : snake.snakeBodies) {
+            if (snake.getRect().intersect(body.getRect()))
+                snake.die();
+        }
+    }
+
+    /**
+     * Vérifie si le serpent est mort ou non, si oui alors mettre fin a l'activité
+     */
+    public void verifiyIsSnakeAlive() {
+        if (snake.isDead())
+            endGame();
     }
 
     /**
@@ -67,28 +114,7 @@ public class GameActivity extends AppCompatActivity {
             float x = event.values[0];
             float y = event.values[1];
 
-            ConstraintLayout layout = findViewById(R.id.gameLayout);
-            //RectangleView rectangleView = new RectangleView(activity, body.getRect());
-            //layout.addView(rectangleView);
-
-            snake.moveSnake(x, y, activity);
-
-            if (snake.getRect().intersect(fruit.getRect())) {
-                fruit.delete();
-                fruit = new Fruit(activity);
-                snake.addBody();
-            }
-
-            for (SnakeBody body : snake.snakeBodies) {
-                if (snake.getRect().intersect(body.getRect())) {
-                    snake.die();
-                }
-            }
-
-
-
-            if (snake.isDead())
-                endGame();
+            updateSnake(x, y);
         }
     };
 
