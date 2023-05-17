@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
@@ -66,6 +67,10 @@ public class GameActivity extends AppCompatActivity {
             float x = event.values[0];
             float y = event.values[1];
 
+            ConstraintLayout layout = findViewById(R.id.gameLayout);
+            //RectangleView rectangleView = new RectangleView(activity, body.getRect());
+            //layout.addView(rectangleView);
+
             snake.moveSnake(x, y, activity);
 
             if (snake.getRect().intersect(fruit.getRect())) {
@@ -73,6 +78,14 @@ public class GameActivity extends AppCompatActivity {
                 fruit = new Fruit(activity);
                 snake.addBody();
             }
+
+            for (SnakeBody body : snake.snakeBodies) {
+                if (snake.getRect().intersect(body.getRect())) {
+                    snake.die();
+                }
+            }
+
+
 
             if (snake.isDead())
                 endGame();

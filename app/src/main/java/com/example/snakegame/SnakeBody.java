@@ -2,7 +2,6 @@ package com.example.snakegame;
 
 import android.app.Activity;
 import android.graphics.Rect;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,6 +48,10 @@ public class SnakeBody {
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
+    public Rect getRect() {
+        return rect;
+    }
+
     public void update() {
         updatePosition();
         updateRotation();
@@ -66,6 +69,8 @@ public class SnakeBody {
 
         image.setX(positionX);
         image.setY(positionY);
+
+        rect = new Rect((int) image.getX() + 40, (int) image.getY() + 40, (int) (image.getX() + image.getWidth() - 40), (int) (image.getY() + image.getHeight() - 40));
     }
 
     private void updateLastPosition() {
@@ -80,7 +85,7 @@ public class SnakeBody {
 
         if (bodyPosition == 0) {
             x = snake.image.getX() - 32;
-            y = snake.image.getX() - 32;
+            y = snake.image.getY() - 32;
             rotation = (int) snake.image.getRotation();
         } else {
             setFrontBody();

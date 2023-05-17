@@ -9,16 +9,16 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class Snake {
-    ImageView image;
-    String currentMove = "up";
-    String lastMove = currentMove;
-    int moveCouldown = 0;
-    boolean dead = false;
-    Rect rect;
-    ArrayList<SnakeBody> snakeBodies = new ArrayList<>();
-    Activity activity;
-    float lastPositionX;
-    float lastPositionY;
+    public ImageView image;
+    private String currentMove = "up";
+    private String lastMove = currentMove;
+    private int moveCouldown = 0;
+    private boolean dead = false;
+    private Rect rect;
+    public ArrayList<SnakeBody> snakeBodies = new ArrayList<>();
+    public Activity activity;
+    public float lastPositionX;
+    public float lastPositionY;
 
     public Snake(ImageView snakeImg, Activity newActivity) {
         activity = newActivity;
@@ -130,6 +130,10 @@ public class Snake {
         }
     }
 
+    public void die() {
+        dead = true;
+    }
+
     public boolean isDead() {
         return dead;
     }
@@ -148,7 +152,7 @@ public class Snake {
 
         // Si le serpent touche un murs alors il meurt
         if (image.getX() <= 0 || image.getX() >= screenWidth - image.getWidth() || image.getY() <= 0 || image.getY() >= screenHeight - image.getHeight()) {
-            dead = true;
+            die();
         }
     }
 
