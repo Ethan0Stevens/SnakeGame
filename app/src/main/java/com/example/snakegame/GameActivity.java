@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,8 @@ public class GameActivity extends AppCompatActivity {
     Snake snake;
     Activity activity;
     ArrayList<Fruit> fruits = new ArrayList<>();
+
+    TextView scoreText;
 
     /**
      * Code éxectué a la creation de l'activité
@@ -37,6 +40,8 @@ public class GameActivity extends AppCompatActivity {
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         snake = new Snake(findViewById(R.id.snakeImg), this);
         fruits.add(new Fruit(this));
+
+        scoreText = findViewById(R.id.scoreText);
     }
 
     /**
@@ -84,6 +89,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
         for (Fruit fruit : fruitsToRemove) {
+            incrementScore();
             fruits.remove(fruit);
 
             // Ajouter un nouveau fruit a la liste des fruits
@@ -92,7 +98,12 @@ public class GameActivity extends AppCompatActivity {
             }
             fruits.add(new Fruit(activity));
         }
+    }
 
+    public void incrementScore() {
+        int score = Integer.parseInt((String) scoreText.getText());
+        score++;
+        scoreText.setText(String.valueOf(score));
     }
 
     /**
