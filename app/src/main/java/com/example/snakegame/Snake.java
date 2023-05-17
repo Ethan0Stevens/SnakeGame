@@ -3,6 +3,7 @@ package com.example.snakegame;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class Snake {
     Rect rect;
     ArrayList<SnakeBody> snakeBodies = new ArrayList<>();
     Activity activity;
+    float lastPositionX;
+    float lastPositionY;
 
     public Snake(ImageView snakeImg, Activity newActivity) {
         activity = newActivity;
@@ -28,7 +31,9 @@ public class Snake {
     }
 
     public void addBody() {
-        snakeBodies.add(new SnakeBody(activity, this, snakeBodies.size()));
+        SnakeBody body = new SnakeBody(activity, this, snakeBodies.size(), snakeBodies);
+        snakeBodies.add(body);
+
     }
 
     public void getCurrentMove(float x, float y) {
@@ -50,8 +55,11 @@ public class Snake {
                     currentMove = lastMove;
             }
             updateMovement(currentMove);
-            lastMove = currentMove;
             updateRotation();
+            lastMove = currentMove;
+            for (SnakeBody body : snakeBodies) {
+                body.update();
+            }
         }
     }
 
@@ -77,14 +85,13 @@ public class Snake {
             default:
                 break;
         }
-        for (SnakeBody body : snakeBodies) {
-            body.updatePosition();
-        }
         checkCollisions(activity);
 
         moveCouldown--;
     }
     public void resetMove() {
+        lastPositionX = image.getX();
+        lastPositionY = image.getY();
         currentMove = "";
         moveCouldown = 7;
     }
