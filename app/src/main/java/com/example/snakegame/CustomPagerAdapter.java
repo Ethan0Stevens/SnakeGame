@@ -1,5 +1,6 @@
 package com.example.snakegame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,5 +45,11 @@ public class CustomPagerAdapter extends PagerAdapter {
     public CharSequence getPageTitle(int position) {
         ModelObject customPagerEnum = ModelObject.values()[position];
         return mContext.getString(customPagerEnum.getTitleResId());
+    }
+
+    @SuppressLint("InflateParams")
+    public View getView() {
+        // Récupérez la vue de la page à l'aide de son index
+        return LayoutInflater.from(mContext).inflate(R.layout.view_level_custom, null);
     }
 }

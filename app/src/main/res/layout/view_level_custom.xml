@@ -8,10 +8,10 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/startHardBtn"
+        android:id="@+id/startCustomBtn"
         android:layout_width="164dp"
         android:layout_height="81dp"
-        android:onClick="startGame"
+        android:onClick="startCustomGame"
         android:text="@string/startBtn"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,33 +27,21 @@
         android:rotation="180"
         android:onClick="jumpToPreviousPage"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/startHardBtn"
+        app:layout_constraintEnd_toStartOf="@+id/startCustomBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@drawable/arrow" />
 
-    <ImageView
-        android:layout_width="61dp"
-        android:layout_height="92dp"
-        android:onClick="jumpToNextPage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/startHardBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/arrow" />
-
     <TextView
-        android:id="@+id/mediumText"
+        android:id="@+id/customText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Difficile"
-        android:textColor="@android:color/holo_red_light"
+        android:text="Personnalisé"
+        android:textColor="@android:color/holo_blue_bright"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/startHardBtn"
+        app:layout_constraintBottom_toTopOf="@+id/startCustomBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
