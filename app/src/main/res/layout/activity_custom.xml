@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.821" />
+        app:layout_constraintVertical_bias="0.853" />
 
     <SeekBar
         android:id="@+id/maxFruitBar"
@@ -64,14 +64,25 @@
         android:id="@+id/accelerationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Puissance d'accélération du serpent"
+        android:text="Vitesse du serpent"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.273"
+        app:layout_constraintHorizontal_bias="0.334"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.622" />
+
+    <TextView
+        android:id="@+id/accelerationValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moyenne"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/accelerationBar"
+        app:layout_constraintEnd_toEndOf="@+id/accelerationBar"
+        app:layout_constraintStart_toStartOf="@+id/accelerationBar"
+        app:layout_constraintTop_toBottomOf="@+id/accelerationText" />
 
     <Button
         android:id="@+id/button"
@@ -79,6 +90,7 @@
         android:layout_height="122dp"
         android:text="GO"
         android:textSize="30sp"
+        android:onClick="startGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.87"

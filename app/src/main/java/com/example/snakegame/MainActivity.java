@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new CustomPagerAdapter(this));
     }
 
-    @SuppressLint("NonConstantResourceId")
     public void startGame(View view) {
 
         int buttonId = view.getId();

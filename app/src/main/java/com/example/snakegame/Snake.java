@@ -2,11 +2,7 @@ package com.example.snakegame;
 
 import android.app.Activity;
 import android.graphics.Rect;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
@@ -30,7 +26,7 @@ public class Snake {
      * @param snakeImg image du serpent
      * @param newActivity activité du serpent
      */
-    public Snake(ImageView snakeImg, Activity newActivity, float acceleration, int defaultSpeed) {
+    public Snake(ImageView snakeImg, Activity newActivity, float acceleration, float defaultSpeed) {
         this.defaultSpeed = defaultSpeed;
         this.acceleration = acceleration;
         activity = newActivity;

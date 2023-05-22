@@ -61,7 +61,7 @@ public class Fruit {
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
         image.setX(((int)(Math.random() * (activityRect.right)/64) * 64));
-        image.setY(((int)(Math.random() * (activityRect.bottom)/64) * 64));
+        image.setY(((int)(Math.random() * ((activityRect.bottom)/64) - 1) * 64));
 
         ConstraintLayout layout = activity.findViewById(R.id.gameLayout); // Remplacez "layout" par l'ID de votre layout
     }
