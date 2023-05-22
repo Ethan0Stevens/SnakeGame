@@ -80,8 +80,8 @@ public class SnakeBody {
         // Alors la position sera l'ancienne position de la tete du serpent
         // Sinon la position sera l'ancienne position de la partie qui se trouve devant
         if (bodyPosition == 0){
-            positionX = snake.lastPositionX - 32;
-            positionY = snake.lastPositionY - 32;
+            positionX = snake.lastPositionX - snake.image.getWidth()/2F;
+            positionY = snake.lastPositionY - snake.image.getHeight()/2F;
         } else {
             positionX = frontBody.lastPositionX;
             positionY = frontBody.lastPositionY;
@@ -116,8 +116,8 @@ public class SnakeBody {
         // Alors récupérer la position/rotation de la tete du serpent
         // Sinon récupérer la position/rotation de la partie du corps de devant
         if (bodyPosition == 0) {
-            x = snake.image.getX() - 32;
-            y = snake.image.getY() - 32;
+            x = snake.image.getX() - snake.image.getWidth()/2f;
+            y = snake.image.getY() - snake.image.getHeight()/2f;
             rotation = (int) snake.image.getRotation();
         } else {
             setFrontBody();
@@ -126,22 +126,24 @@ public class SnakeBody {
             rotation = (int) frontBody.image.getRotation();
         }
 
+        int squareSize = snake.image.getWidth();
+
         // Placer la partie du corps en fonction de la rotation de la partie qui se trouve devant
         switch (rotation) {
             case 180:
                 positionX = x;
-                positionY = y - 64;
+                positionY = y - squareSize;
                 break;
             case 0:
                 positionX = x;
-                positionY = y + 64;
+                positionY = y + squareSize;
                 break;
             case 90:
-                positionX = x - 64;
+                positionX = x - squareSize;
                 positionY = y;
                 break;
             case 270:
-                positionX = x + 64;
+                positionX = x + squareSize;
                 positionY = y;
                 break;
         }

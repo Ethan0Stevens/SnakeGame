@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(View view) {
+
+        // Log.i("TAG", String.valueOf(view.id));
+
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }

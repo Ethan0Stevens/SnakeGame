@@ -182,17 +182,15 @@ public class Snake {
      * Verifie les collision avec les bords de l'écran
      */
     public void checkCollisions(Activity activity) {
-        // Récupérer les dimensions de l'écran
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int screenWidth = displayMetrics.widthPixels;
-        int screenHeight = displayMetrics.heightPixels;
+        // Récupérer les dimensions la bar de navigation virtuelle
+        Rect activityRect = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
         // Met a jour le rectangle de collision de la tete du serpent
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
 
         // Si le serpent touche un murs alors il meurt
-        if (image.getX() <= 0 || image.getX() >= screenWidth - image.getWidth() || image.getY() <= 0 || image.getY() >= screenHeight - image.getHeight()) {
+        if (image.getX() < - image.getWidth() || image.getX() > activityRect.right - image.getWidth() || image.getY() < -image.getHeight() || image.getY() > activityRect.bottom) {
             die();
         }
     }

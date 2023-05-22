@@ -61,8 +61,8 @@ public class Fruit {
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
-        image.setX(((int)(Math.random() * (screenWidth-100)/64) * 64));
-        image.setY(((int)(Math.random() * (screenHeight-100)/64) * 64) + 10);
+        image.setX(((int)(Math.random() * (screenWidth)/64) * 64));
+        image.setY(((int)(Math.random() * (screenHeight)/64) * 64));
     }
 
     /**
