@@ -2,6 +2,7 @@ package com.example.snakegame;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,8 +35,10 @@ public class SnakeBody {
     public SnakeBody(Activity activity, Snake newSnake, int newBodyPotition, ArrayList<SnakeBody> newSnakeBodyList) {
         image = new ImageView(activity);
         image.setImageResource(R.drawable.snake_body);
-        image.setScaleX(0.5F);
-        image.setScaleY(0.5f);
+
+        // Appliquez les nouveaux paramètres de mise en page à l'ImageView
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
+        image.setLayoutParams(layoutParams);
 
         bodyPosition = newBodyPotition;
         snakeBodies = newSnakeBodyList;
@@ -80,8 +83,8 @@ public class SnakeBody {
         // Alors la position sera l'ancienne position de la tete du serpent
         // Sinon la position sera l'ancienne position de la partie qui se trouve devant
         if (bodyPosition == 0){
-            positionX = snake.lastPositionX - snake.image.getWidth()/2F;
-            positionY = snake.lastPositionY - snake.image.getHeight()/2F;
+            positionX = snake.lastPositionX;
+            positionY = snake.lastPositionY;
         } else {
             positionX = frontBody.lastPositionX;
             positionY = frontBody.lastPositionY;
@@ -116,8 +119,8 @@ public class SnakeBody {
         // Alors récupérer la position/rotation de la tete du serpent
         // Sinon récupérer la position/rotation de la partie du corps de devant
         if (bodyPosition == 0) {
-            x = snake.image.getX() - snake.image.getWidth()/2f;
-            y = snake.image.getY() - snake.image.getHeight()/2f;
+            x = snake.image.getX();
+            y = snake.image.getY();
             rotation = (int) snake.image.getRotation();
         } else {
             setFrontBody();

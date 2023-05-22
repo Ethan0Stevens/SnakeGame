@@ -63,6 +63,9 @@ public class GameActivity extends AppCompatActivity {
         snake = new Snake(findViewById(R.id.snakeImg), this, snakeAcceleration, snakeSpeed);
         fruits.add(new Fruit(this));
         constraintLayout.setVisibility(View.INVISIBLE);
+
+        snake.image.setX((64 * 11) + 32);
+        snake.image.setY((64 * 5) + 32);
     }
 
     public void setDifficultyParams(String difficulty) {

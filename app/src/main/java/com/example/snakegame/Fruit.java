@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,9 +39,9 @@ public class Fruit {
         // Définit le sprite de l'image
         image.setImageResource(R.drawable.devil_fruit);
 
-        // Diminue la taille de l'image par 2
-        image.setScaleX(0.5F);
-        image.setScaleY(0.5f);
+        // Appliquez les nouveaux paramètres de mise en page à l'ImageView
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
+        image.setLayoutParams(layoutParams);
     }
 
     /**
@@ -55,21 +56,21 @@ public class Fruit {
      * Place l'image a une position aléatoire de l'ecrant en prenant en compte un quadrillage imaginaire
      */
     private void setRandomPosition() {
-        // Récupérer la taille de l'écran
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int screenWidth = displayMetrics.widthPixels;
-        int screenHeight = displayMetrics.heightPixels;
+        // Récupérer les dimensions la bar de navigation virtuelle
+        Rect activityRect = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
-        image.setX(((int)(Math.random() * (screenWidth)/64) * 64));
-        image.setY(((int)(Math.random() * (screenHeight)/64) * 64));
+        image.setX(((int)(Math.random() * (activityRect.right)/64) * 64));
+        image.setY(((int)(Math.random() * (activityRect.bottom)/64) * 64));
+
+        ConstraintLayout layout = activity.findViewById(R.id.gameLayout); // Remplacez "layout" par l'ID de votre layout
     }
 
     /**
      * Définit la taille du rectangle de collision du fruit
      */
     private void setRect() {
-        rect = new Rect((int) image.getX() + 40, (int) image.getY() + 40, (int) (image.getX() + 90), (int) (image.getY() + 90));
+        rect = new Rect((int) image.getX() + 2, (int) image.getY() + 2, (int) (image.getX() + 60), (int) (image.getY() + 60));
     }
 
     /**

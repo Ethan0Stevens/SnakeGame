@@ -11,13 +11,14 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new CustomPagerAdapter(this));
     }
 
@@ -36,5 +37,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startActivity(intent);
+    }
+
+    public void jumpToNextPage(View view) {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+    }
+
+    public void jumpToPreviousPage(View view) {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 }

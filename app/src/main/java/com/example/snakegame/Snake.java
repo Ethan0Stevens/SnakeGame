@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 
 public class Snake {
@@ -116,8 +118,6 @@ public class Snake {
         lastPositionY = image.getY();
 
         moveCouldown -= 1; // diminue le couldown de 1
-
-        Log.i("TAG", String.valueOf(moveCouldown));
     }
 
     /**
@@ -196,7 +196,7 @@ public class Snake {
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
 
         // Si le serpent touche un murs alors il meurt
-        if (image.getX() < - image.getWidth() || image.getX() > activityRect.right - image.getWidth() || image.getY() < -image.getHeight() || image.getY() > activityRect.bottom) {
+        if (image.getX() < 0 || image.getX() > activityRect.right - image.getWidth() || image.getY() < 0 || image.getY() > activityRect.bottom - image.getHeight()) {
             die();
         }
     }
