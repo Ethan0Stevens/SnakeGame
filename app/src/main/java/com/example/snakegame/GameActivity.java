@@ -3,35 +3,21 @@ package com.example.snakegame;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
@@ -39,9 +25,11 @@ public class GameActivity extends AppCompatActivity {
     Snake snake;
     Activity activity;
     ArrayList<Fruit> fruits = new ArrayList<>();
-
     TextView scoreText;
     ConstraintLayout constraintLayout;
+    int totalFruitsSpawn;
+    float snakeAcceleration;
+    int snakeSpeed;
 
     /**
      * Code éxectué a la creation de l'activité
@@ -60,6 +48,10 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 
+        Bundle extras = getIntent().getExtras();
+        String difficulty = extras.getString("difficulty");
+
+        setDifficultyParams(difficulty);
 
         // Initialisation des varibles
         activity = this;
@@ -68,9 +60,29 @@ public class GameActivity extends AppCompatActivity {
         scoreText = findViewById(R.id.scoreText);
         constraintLayout = findViewById(R.id.gameOver);
 
-        snake = new Snake(findViewById(R.id.snakeImg), this);
+        snake = new Snake(findViewById(R.id.snakeImg), this, snakeAcceleration, snakeSpeed);
         fruits.add(new Fruit(this));
         constraintLayout.setVisibility(View.INVISIBLE);
+    }
+
+    public void setDifficultyParams(String difficulty) {
+        switch (difficulty) {
+            case "easy":
+                totalFruitsSpawn = 4;
+                snakeAcceleration = 10;
+                snakeSpeed = 10;
+                break;
+            case "medium":
+                totalFruitsSpawn = 3;
+                snakeAcceleration = 10;
+                snakeSpeed = 7;
+                break;
+            case "hard":
+                totalFruitsSpawn = 2;
+                snakeAcceleration = 10;
+                snakeSpeed = 5;
+                break;
+        }
     }
 
     public void reloadGame(View view) {
@@ -132,24 +144,12 @@ public class GameActivity extends AppCompatActivity {
 
             // Ajouter un nouveau fruit a la liste des fruits
             if (fruits.size() <= 0) {
-                fruits.add(new Fruit(activity));
+                for (int i = totalFruitsSpawn-1; i > 0; i--) {
+                    fruits.add(new Fruit(activity));
+                }
             }
             fruits.add(new Fruit(activity));
         }
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int screenWidth = displayMetrics.widthPixels;
-        int screenHeight = displayMetrics.heightPixels;
-
-        Rect activityRect = new Rect();
-        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
-
-        Rect rect = new Rect(0, 0, activityRect.right, screenHeight);
-
-        ConstraintLayout layout = findViewById(R.id.gameLayout); // Remplacez "layout" par l'ID de votre layout
-        RectangleView rectangleView = new RectangleView(activity, rect);
-        layout.addView(rectangleView);
     }
 
     public void incrementScore() {

@@ -13,20 +13,24 @@ public class Snake {
     public ImageView image;
     private String currentMove = "up";
     private String lastMove = currentMove;
-    private int moveCouldown = 0;
+    private float moveCouldown = 0;
     private boolean dead = false;
     private Rect rect;
     public ArrayList<SnakeBody> snakeBodies = new ArrayList<>();
     public Activity activity;
     public float lastPositionX;
     public float lastPositionY;
+    private final float acceleration;
+    private final float defaultSpeed;
 
     /**
      * Constructeur de la class Snake
      * @param snakeImg image du serpent
      * @param newActivity activité du serpent
      */
-    public Snake(ImageView snakeImg, Activity newActivity) {
+    public Snake(ImageView snakeImg, Activity newActivity, float acceleration, int defaultSpeed) {
+        this.defaultSpeed = defaultSpeed;
+        this.acceleration = acceleration;
         activity = newActivity;
         image = snakeImg;
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
@@ -79,7 +83,7 @@ public class Snake {
      */
     public void moveSnake(float x, float y, Activity activity) {
         getCurrentMove(x, y);
-        if (moveCouldown <= 0) {
+        if (moveCouldown <= 0 + ((snakeBodies.size()-1) / acceleration)) {
             updateMovement(currentMove);
             lastMove = currentMove;
             switch (currentMove) {
@@ -111,7 +115,9 @@ public class Snake {
         lastPositionX = image.getX();
         lastPositionY = image.getY();
 
-        moveCouldown--; // diminue le couldown de 1
+        moveCouldown -= 1; // diminue le couldown de 1
+
+        Log.i("TAG", String.valueOf(moveCouldown));
     }
 
     /**
@@ -120,7 +126,7 @@ public class Snake {
     public void resetMove() {
         updateRotation();
         currentMove = "";
-        moveCouldown = 7 - (snakeBodies.size()-1) / 6;
+        moveCouldown = defaultSpeed;
     }
 
     /**
