@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-public class CustomPagerAdapter extends PagerAdapter {
+public class LevelPagerAdapter extends PagerAdapter {
     private final Context mContext;
 
-    public CustomPagerAdapter(Context context) {
+    public LevelPagerAdapter(Context context) {
         mContext = context;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup collection, int position) {
-        ModelObject modelObject = ModelObject.values()[position];
+        ModelObjectLevel modelObject = ModelObjectLevel.values()[position];
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(modelObject.getLayoutResId(), collection, false);
         collection.addView(layout);
@@ -33,7 +33,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return ModelObject.values().length;
+        return ModelObjectLevel.values().length;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        ModelObject customPagerEnum = ModelObject.values()[position];
+        ModelObjectLevel customPagerEnum = ModelObjectLevel.values()[position];
         return mContext.getString(customPagerEnum.getTitleResId());
     }
 

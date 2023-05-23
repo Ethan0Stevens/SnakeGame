@@ -1,21 +1,13 @@
 package com.example.snakegame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -30,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new CustomPagerAdapter(this));
+        viewPager.setAdapter(new LevelPagerAdapter(this));
     }
 
     public void startGame(View view) {

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/jungle_background">
 
     <Button
         android:id="@+id/startMediumBtn"
@@ -51,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Moyen"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="@android:color/white"
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/startMediumBtn"
         app:layout_constraintEnd_toEndOf="parent"

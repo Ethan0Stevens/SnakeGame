@@ -1,6 +1,6 @@
 package com.example.snakegame;
 
-public enum ModelObject {
+public enum ModelObjectLevel {
 
     EASY(R.string.red, R.layout.view_level_easy),
     MEDIUM(R.string.blue, R.layout.view_level_medium),
@@ -10,7 +10,7 @@ public enum ModelObject {
     private final int mTitleResId;
     private final int mLayoutResId;
 
-    ModelObject(int titleResId, int layoutResId) {
+    ModelObjectLevel(int titleResId, int layoutResId) {
         mTitleResId = titleResId;
         mLayoutResId = layoutResId;
     }
