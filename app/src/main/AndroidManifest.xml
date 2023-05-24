@@ -27,6 +27,9 @@
         <activity android:name=".CustomGameActivity"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".LeaderBoardActivity"
+            android:screenOrientation="fullSensor">
+        </activity>
     </application>
 
 </manifest>

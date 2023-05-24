@@ -53,4 +53,20 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CustomGameActivity.class);
         startActivity(intent);
     }
+
+    public void goToLeaderboard(View view) {
+
+        int viewId = view.getId();
+        Intent intent = new Intent(this, LeaderBoardActivity.class);
+
+        if (viewId == R.id.leaderboardEasyText || viewId == R.id.LeaderboardEasyArrow) {
+            intent.putExtra("difficulty", "easy");
+        } else if (viewId == R.id.leaderboardMediumText || viewId == R.id.LeaderboardMediumArrow) {
+            intent.putExtra("difficulty", "medium");
+        } else if (viewId == R.id.leaderboardHardText || viewId == R.id.LeaderboardHardArrow) {
+            intent.putExtra("difficulty", "hard");
+        }
+
+        startActivity(intent);
+    }
 }

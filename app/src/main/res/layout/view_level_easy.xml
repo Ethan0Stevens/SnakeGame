@@ -23,8 +23,8 @@
         tools:textSize="24sp" />
 
     <ImageView
-        android:layout_width="61dp"
-        android:layout_height="92dp"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
         android:onClick="jumpToNextPage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toEndOf="@+id/startEasyBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/arrow" />
+        app:srcCompat="@drawable/white_arrow" />
 
     <TextView
         android:id="@+id/easyText"
@@ -40,10 +40,41 @@
         android:layout_height="wrap_content"
         android:text="Facile"
         android:textColor="@android:color/holo_green_light"
+        android:background="@drawable/text_border"
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/startEasyBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/leaderboardEasyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_border"
+        android:text="@string/leaderboard_txt"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:onClick="goToLeaderboard"
+        app:layout_constraintBottom_toTopOf="@+id/LeaderboardEasyArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startEasyBtn"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/LeaderboardEasyArrow"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
+        android:onClick="goToLeaderboard"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startEasyBtn"
+        app:layout_constraintVertical_bias="0.928"
+        app:srcCompat="@drawable/white_arrow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
