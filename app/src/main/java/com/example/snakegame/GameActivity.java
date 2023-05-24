@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     ConstraintLayout constraintLayout;
     int totalFruitsSpawn;
     float snakeSpeed;
+    String difficulty;
 
     /**
      * Code éxectué a la creation de l'activité
@@ -48,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         Bundle extras = getIntent().getExtras();
-        String difficulty = "";
+
         if(extras != null) {
             if (extras.getString("difficulty") != null) {
                 difficulty = extras.getString("difficulty");
@@ -56,7 +57,7 @@ public class GameActivity extends AppCompatActivity {
             totalFruitsSpawn = extras.getInt("totalFruitsSpawn");
             snakeSpeed = extras.getInt("snakeSpeed");
         }
-        setDifficultyParams(difficulty);
+        setDifficultyParams();
 
         // Initialisation des varibles
         activity = this;
@@ -73,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
         snake.image.setY((64 * 5) + 32);
     }
 
-    public void setDifficultyParams(String difficulty) {
+    public void setDifficultyParams() {
         switch (difficulty) {
             case "easy":
                 totalFruitsSpawn = 4;
@@ -100,6 +101,11 @@ public class GameActivity extends AppCompatActivity {
     public void endGame() {
         constraintLayout.setZ(10);
         constraintLayout.setVisibility(View.VISIBLE);
+
+        if (difficulty != null) {
+            DataBaseHandler table = new DataBaseHandler(this, difficulty);
+            table.insertScore("user", String.valueOf(snake.snakeBodies.size()));
+        }
     }
 
     public void exitActivity(View view) {

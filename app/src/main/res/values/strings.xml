@@ -6,4 +6,7 @@
     <string name="blue">blue</string>
     <string name="green">green</string>
     <string name="leaderboard_txt">Leaderboard</string>
+    <string name="top">Top</string>
+    <string name="nom">Nom</string>
+    <string name="score">Score</string>
 </resources>

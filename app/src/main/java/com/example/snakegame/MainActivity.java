@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DataBaseHandler tableMedium = new DataBaseHandler(this, "medium");
+        DataBaseHandler tableHard = new DataBaseHandler(this, "hard");
 
 
         viewPager = findViewById(R.id.viewpager);

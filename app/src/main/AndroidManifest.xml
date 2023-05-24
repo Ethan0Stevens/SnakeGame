@@ -28,7 +28,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity android:name=".LeaderBoardActivity"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
