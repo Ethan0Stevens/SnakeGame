@@ -35,7 +35,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void createTable(SQLiteDatabase db) {
         db.execSQL("Create Table " + tableName + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY, "
-                + COLUMN_TOP + " TEXT, "
+                + COLUMN_TOP + " NUMBER, "
                 + COLUMN_NAME + " TEXT, "
                 + COLUMN_SCORE + " TEXT)");
 
@@ -54,8 +54,36 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public Boolean insertScore(String name, String score) {
         SQLiteDatabase db = getWritableDatabase();
+
+        int top = 1;
+        int count = 1;
+        boolean inserted = false;
+        ArrayList<ArrayList<String>> datas = getDatas();
+
+        for (ArrayList<String> data: datas) {
+            count++;
+
+            if (inserted) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("top", Integer.parseInt(data.get(1)) + 1);
+
+                db.update(tableName, contentValues, "ID= ?", new String[] {data.get(0)});
+            } else if (Integer.parseInt(score) > Integer.parseInt(data.get(3))) {
+                inserted = true;
+                top = Integer.parseInt(data.get(1));
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("top", top + 1);
+
+                db.update(tableName, contentValues, "ID= ?", new String[] {data.get(0)});
+            }
+        }
+
+        if (!inserted)
+            top = count;
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put("top", "1");
+        contentValues.put("top", top);
         contentValues.put("name", name);
         contentValues.put("score", score);
 
@@ -67,14 +95,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public ArrayList<ArrayList<String>> getDatas() {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " ORDER BY top", null);
 
         ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {
                 ArrayList<String> score = new ArrayList<>();
-                score.add(cursor.getString(1));
+                score.add(cursor.getString(0));
+                score.add(String.valueOf(cursor.getInt(1)));
                 score.add(cursor.getString(2));
                 score.add(cursor.getString(3));
                 arrayList.add(score);
