@@ -5,24 +5,17 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
-    SeekBar fruitsSeekerBar;
-    TextView nbFruitsText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        DataBaseHandler tableMedium = new DataBaseHandler(this, "medium");
-        DataBaseHandler tableHard = new DataBaseHandler(this, "hard");
-
 
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new LevelPagerAdapter(this));

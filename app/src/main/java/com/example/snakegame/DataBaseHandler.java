@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class DataBaseHandler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "leaderboard.db";
-    private String tableName = "easy";
+    private final String tableName;
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TOP = "top";
     private static final String COLUMN_NAME = "name";
@@ -26,6 +27,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
         database = getWritableDatabase();
         this.tableName = tableName;
+        Log.i("TAG", tableName);
+        createTable(database);
     }
 
     @Override
@@ -34,7 +37,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     public void createTable(SQLiteDatabase db) {
-        db.execSQL("Create Table " + tableName + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY, "
+        db.execSQL("Create Table IF NOT EXISTS " + tableName + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY, "
                 + COLUMN_TOP + " NUMBER, "
                 + COLUMN_NAME + " TEXT, "
                 + COLUMN_SCORE + " TEXT)");
