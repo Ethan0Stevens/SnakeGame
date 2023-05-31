@@ -33,6 +33,11 @@ public class SnakeTail {
         image.setY(0);
     }
 
+    public void update() {
+        updatePosition();
+        updateRotation();
+    }
+
     public void updatePosition() {
         // Si la partie du corps est la premiere de la liste,
         // Alors la position sera l'ancienne position de la tete du serpent
@@ -41,8 +46,26 @@ public class SnakeTail {
             image.setX(snake.lastPositionX);
             image.setY(snake.lastPositionY);
         } else {
-            image.setX(bodies.get(bodies.size()-1).lastPositionX);
-            image.setY(bodies.get(bodies.size()-1).lastPositionY);
+            SnakeBody body = bodies.get(bodies.size()-1);
+
+            image.setX(body.lastPositionX);
+            image.setY(body.lastPositionY);
+        }
+    }
+
+    public void updateRotation() {
+        if (bodies.size() == 0){
+            image.setRotation(snake.image.getRotation());
+        } else {
+            if (bodies.get(bodies.size()-1).direction.equals("up")) {
+                image.setRotation(180);
+            } else if (bodies.get(bodies.size()-1).direction.equals("down")) {
+                image.setRotation(0);
+            } else if (bodies.get(bodies.size()-1).direction.equals("right")) {
+                image.setRotation(270);
+            } else if (bodies.get(bodies.size()-1).direction.equals("left")) {
+                image.setRotation(90);
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ public class SnakeBody {
     boolean turn = false;
     boolean turned = false;
     String direction = "";
+    String lastDirection = "";
 
 
     /**
@@ -55,6 +56,7 @@ public class SnakeBody {
 
         image.setX(positionX);
         image.setY(positionY);
+
 
         updateRotation();
 
@@ -88,14 +90,17 @@ public class SnakeBody {
      */
     public void updatePosition() {
         updateLastPosition();
+        lastDirection = direction;
 
         // Si la partie du corps est la premiere de la liste,
         // Alors la position sera l'ancienne position de la tete du serpent
         // Sinon la position sera l'ancienne position de la partie qui se trouve devant
         if (bodyPosition == 0){
+            direction = snake.lastMove;
             positionX = snake.lastPositionX;
             positionY = snake.lastPositionY;
         } else {
+            direction = frontBody.lastDirection;
             positionX = frontBody.lastPositionX;
             positionY = frontBody.lastPositionY;
         }

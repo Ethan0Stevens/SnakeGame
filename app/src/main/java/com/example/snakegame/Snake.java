@@ -56,7 +56,6 @@ public class Snake {
     public void addBody() {
         SnakeBody body = new SnakeBody(activity, this, snakeBodies.size(), snakeBodies);
         snakeBodies.add(body);
-
     }
 
     /**
@@ -106,8 +105,6 @@ public class Snake {
                 body.update();
             }
 
-            tail.updatePosition();
-
             lastMove = currentMove;
             switch (currentMove) {
                 case "up":
@@ -130,10 +127,14 @@ public class Snake {
                     break;
             }
             checkCollisions(activity);
+
         }
+
         // Enregistre l'ancienne position du serpent
         lastPositionX = image.getX();
         lastPositionY = image.getY();
+
+        tail.update();
 
         moveCouldown -= 0.1f; // diminue le couldown
     }
