@@ -72,7 +72,7 @@ public class Snake {
         float sensibility = 1F;
 
         if (Math.abs(x) > Math.abs(y)) {
-            if (x > sensibility)
+            if (x > sensibility + 0.5)
                 currentMove = "up";
             else if (x < -sensibility)
                 currentMove = "down";
