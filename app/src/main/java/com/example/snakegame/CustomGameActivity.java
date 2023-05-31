@@ -3,7 +3,6 @@ package com.example.snakegame;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -11,11 +10,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomGameActivity  extends AppCompatActivity {
+    // Déclaration des variables
     SeekBar fruitsSeekerBar;
     SeekBar accelerationSeekerBar;
     TextView nbFruitsText;
     TextView accelerationValueText;
 
+    /**
+     * Code executé a la cration de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,10 @@ public class CustomGameActivity  extends AppCompatActivity {
         accelerationSeekerBar.setOnSeekBarChangeListener(new AccelerationSeekerListner());
     }
 
+    /**
+     * Change d'activité pour la GameActivity
+     * en donnant en parametre le nombre de fruit max et la vitesse du serpent
+     */
     public void startGame(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("totalFruitsSpawn", fruitsSeekerBar.getProgress());
@@ -42,8 +49,14 @@ public class CustomGameActivity  extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Listener de la bar du nombre de fruit max
+     */
     private class FruitSeekerListner implements SeekBar.OnSeekBarChangeListener {
 
+        /**
+         * A chaque fois que la valeur de la bar change
+         */
         public void onProgressChanged(SeekBar seekBar, int progress,
                                       boolean fromUser) {
             //set textView's text
@@ -56,22 +69,31 @@ public class CustomGameActivity  extends AppCompatActivity {
 
     }
 
+    /**
+     * Listener de la bar de la vitesse du serpent
+     */
     private class AccelerationSeekerListner implements SeekBar.OnSeekBarChangeListener {
 
+        /**
+         * A chaque fois que la valeur de la bar change
+         */
+        @SuppressLint("SetTextI18n")
         public void onProgressChanged(SeekBar seekBar, int progress,
                                       boolean fromUser) {
             //set textView's text
 
             if (progress > seekBar.getMax()/2 + 2) {
-                if (progress == seekBar.getMax())
-                    accelerationValueText.setText("Très Faible");
                 accelerationValueText.setText("Faible");
             } else if (progress < seekBar.getMax()/2 - 2) {
-                if (progress == 0)
-                    accelerationValueText.setText("Très Forte");
                 accelerationValueText.setText("Forte");
             } else {
                 accelerationValueText.setText("Moyenne");
+            }
+
+            if (progress == seekBar.getMax()) {
+                accelerationValueText.setText("Tres Faible");
+            } else if (progress == 0) {
+                accelerationValueText.setText("Très Forte");
             }
 
         }
