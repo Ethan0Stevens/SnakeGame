@@ -21,6 +21,7 @@ public class Snake {
     public float lastPositionY;
     private final float acceleration;
     private final float defaultSpeed;
+    SnakeTail tail;
 
     /**
      * Constructeur de la class Snake
@@ -38,6 +39,8 @@ public class Snake {
         image.setY((64 * 5) + 32);
 
         setRect();
+
+        tail = new SnakeTail(activity, this, snakeBodies);
     }
 
     /**
@@ -102,6 +105,8 @@ public class Snake {
             for (SnakeBody body : snakeBodies) {
                 body.update();
             }
+
+            tail.updatePosition();
 
             lastMove = currentMove;
             switch (currentMove) {

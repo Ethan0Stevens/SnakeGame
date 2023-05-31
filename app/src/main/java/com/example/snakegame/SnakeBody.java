@@ -25,14 +25,15 @@ public class SnakeBody {
     float lastRotation;
     boolean turn = false;
     boolean turned = false;
+    String direction = "";
 
 
     /**
      * Constructeur de la classe SnakeBody
      * @param activity L'activité de la classe SnakeBody
-     * @param newSnake La tete du serpent
-     * @param newBodyPotition La position de la partie du corps dans la liste des parties du corps
-     * @param newSnakeBodyList la liste des parties du corps
+     * @param snake La tete du serpent
+     * @param bodyPosition La position de la partie du corps dans la liste des parties du corps
+     * @param bodies la liste des parties du corps
      */
     public SnakeBody(Activity activity, Snake snake, int bodyPosition, ArrayList<SnakeBody> bodies) {
         image = new ImageView(activity);
@@ -70,7 +71,7 @@ public class SnakeBody {
     /**
      * Définit la taille du rectangle de collision du fruit
      */
-    private void setRect() {
+    public void setRect() {
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
@@ -85,7 +86,7 @@ public class SnakeBody {
     /**
      * Met à jour en temps réel la position de la partie du corps
      */
-    private void updatePosition() {
+    public void updatePosition() {
         updateLastPosition();
 
         // Si la partie du corps est la premiere de la liste,
@@ -109,7 +110,7 @@ public class SnakeBody {
     /**
      * Stoque la derniere position de la partie du corps
      */
-    private void updateLastPosition() {
+    public void updateLastPosition() {
         lastPositionX = positionX;
         lastPositionY = positionY;
     }
@@ -117,7 +118,7 @@ public class SnakeBody {
     /**
      * Récupere la position et la rotation initial de la partie du coprs lors de sa création
      */
-    private void getInitialPosition() {
+    public void getInitialPosition() {
         // Déclaration de variables
         float x;
         float y;
@@ -165,14 +166,14 @@ public class SnakeBody {
     /**
      * Récupère la partie du corps qui se trouve juste avant celle la
      */
-    private void setFrontBody() {
+    public void setFrontBody() {
         frontBody = snakeBodies.get(bodyPosition - 1);
     }
 
     /**
      * Met a jour la rotation de la partie du corps
      */
-    private void updateRotation() {
+    public void updateRotation() {
         // Stoque l'ancienne rotation
         lastRotation = image.getRotation();
 
