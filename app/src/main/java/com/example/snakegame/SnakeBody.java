@@ -34,7 +34,7 @@ public class SnakeBody {
      * @param newBodyPotition La position de la partie du corps dans la liste des parties du corps
      * @param newSnakeBodyList la liste des parties du corps
      */
-    public SnakeBody(Activity activity, Snake newSnake, int newBodyPotition, ArrayList<SnakeBody> newSnakeBodyList) {
+    public SnakeBody(Activity activity, Snake snake, int bodyPosition, ArrayList<SnakeBody> bodies) {
         image = new ImageView(activity);
         image.setImageResource(R.drawable.snake_body);
 
@@ -42,9 +42,9 @@ public class SnakeBody {
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
         image.setLayoutParams(layoutParams);
 
-        bodyPosition = newBodyPotition;
-        snakeBodies = newSnakeBodyList;
-        snake = newSnake;
+        this.bodyPosition = bodyPosition;
+        this.snakeBodies = bodies;
+        this.snake = snake;
 
         // Placer l'image sur le layout
         constraintLayout = activity.findViewById(R.id.gameLayout);
@@ -57,7 +57,7 @@ public class SnakeBody {
 
         updateRotation();
 
-        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
+        setRect();
     }
 
     /**
@@ -65,6 +65,13 @@ public class SnakeBody {
      */
     public Rect getRect() {
         return rect;
+    }
+
+    /**
+     * Définit la taille du rectangle de collision du fruit
+     */
+    private void setRect() {
+        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
     /**
@@ -96,8 +103,7 @@ public class SnakeBody {
         image.setX(positionX);
         image.setY(positionY);
 
-        // Met a jour la hitbox de la partie du corps (Elle est plus petite que la tete pour certains problemes)
-        rect = new Rect((int) image.getX() + 40, (int) image.getY() + 40, (int) (image.getX() + image.getWidth() - 40), (int) (image.getY() + image.getHeight() - 40));
+        setRect();
     }
 
     /**
@@ -131,6 +137,7 @@ public class SnakeBody {
             rotation = (int) frontBody.image.getRotation();
         }
 
+        // Taille d'une tuile de jeu
         int squareSize = snake.image.getWidth();
 
         // Placer la partie du corps en fonction de la rotation de la partie qui se trouve devant
@@ -178,6 +185,7 @@ public class SnakeBody {
                 turn = true;
                 image.setImageResource(R.drawable.snake_body_turn_right);
 
+                // En fonction de la direction du serpent, changer de sprite et changer sa rotation
                 if (turned) {
                     if ((image.getRotation() == 0 && snake.currentMove.equals("up")) ||
                             (image.getRotation() == 180 && snake.currentMove.equals("right"))  ||
