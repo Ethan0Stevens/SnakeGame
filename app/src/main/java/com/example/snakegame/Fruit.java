@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+
 public class Fruit {
     // Déclaration des variables de la class Fruit
     ImageView image;
@@ -16,17 +18,21 @@ public class Fruit {
     ConstraintLayout constraintLayout;
     Activity activity;
 
+    ArrayList<Fruit> fruits;
+    int randomx;
+    int randomy;
+
     /**
      * Constructeur de la class Fruit
      * @param newActivity l'activité du fruit
      */
-    public Fruit(Activity newActivity) {
+    public Fruit(Activity newActivity, ArrayList<Fruit> fruits) {
         activity = newActivity;
+        this.fruits = fruits;
 
         setImage();
-        setRandomPosition();
+        updateFruit();
         placeImage();
-        setRect();
     }
 
     /**
@@ -52,6 +58,17 @@ public class Fruit {
         constraintLayout.addView(image);
     }
 
+
+    public void updateFruit() {
+        setRandomPosition();
+
+        for (Fruit fruit : fruits) {
+            if (rect.intersect(fruit.getRect())) {
+                updateFruit();
+            }
+        }
+    }
+
     /**
      * Place l'image a une position aléatoire de l'ecrant en prenant en compte un quadrillage imaginaire
      */
@@ -66,10 +83,10 @@ public class Fruit {
         Log.i("TAG", String.valueOf(randomx));
         Log.i("TAG", String.valueOf(randomy));
 
-        image.setX(((int)(randomx)  * 64));
-        image.setY(((int)(randomy) * 64));
+        image.setX(((4)  * 64));
+        image.setY(((randomy) * 64));
 
-        ConstraintLayout layout = activity.findViewById(R.id.gameLayout); // Remplacez "layout" par l'ID de votre layout
+        setRect();
     }
 
     /**

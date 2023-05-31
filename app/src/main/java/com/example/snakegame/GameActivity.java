@@ -173,11 +173,15 @@ public class GameActivity extends AppCompatActivity {
             // Ajouter un nouveau fruit a la liste des fruits
             if (fruits.size() <= 0) {
                 for (int i = totalFruitsSpawn-1; i > 0; i--) {
-                    fruits.add(new Fruit(activity));
+                    addFruit();
                 }
             }
-            fruits.add(new Fruit(activity));
+            addFruit();
         }
+    }
+
+    private void addFruit() {
+        fruits.add(new Fruit(activity, fruits));
     }
 
     public void incrementScore() {
@@ -227,7 +231,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void hideAskPseudo(View view) {
         askPseudoLayout.setVisibility(View.INVISIBLE);
-        fruits.add(new Fruit(this));
+        addFruit();
     }
 }
 
