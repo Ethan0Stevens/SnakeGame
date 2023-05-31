@@ -22,6 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:textSize="24sp" />
 
+
+
     <ImageView
         android:layout_width="90dp"
         android:layout_height="100dp"

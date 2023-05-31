@@ -27,13 +27,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
         database = getWritableDatabase();
         this.tableName = tableName;
-        Log.i("TAG", tableName);
         createTable(database);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        createTable(db);
     }
 
     public void createTable(SQLiteDatabase db) {
@@ -42,11 +36,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + COLUMN_NAME + " TEXT, "
                 + COLUMN_SCORE + " TEXT)");
 
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + tableName);
     }
 
     public void resetTable() {
@@ -114,5 +103,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return arrayList;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
 }

@@ -21,7 +21,6 @@ public class CustomGameActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom);
 
-
         fruitsSeekerBar = findViewById(R.id.maxFruitBar);
         accelerationSeekerBar = findViewById(R.id.accelerationBar);
         nbFruitsText = findViewById(R.id.nbFruitsText);

@@ -23,6 +23,8 @@ public class SnakeBody {
     ArrayList<SnakeBody> snakeBodies;
     SnakeBody frontBody;
     float lastRotation;
+    boolean turn = false;
+    boolean turned = false;
 
 
     /**
@@ -171,8 +173,62 @@ public class SnakeBody {
         // Alors récupere la meme rotation que la tete
         // Sinon récupere l'ancienne rotation de la partie du corps positionné devant
         if (bodyPosition == 0) {
-            image.setRotation(snake.image.getRotation());
+            turned = turn;
+            if ((!snake.currentMove.equals(snake.lastMove))) {
+                turn = true;
+                image.setImageResource(R.drawable.snake_body_turn_right);
+
+                if (turned) {
+                    if ((image.getRotation() == 0 && snake.currentMove.equals("up")) ||
+                            (image.getRotation() == 180 && snake.currentMove.equals("right"))  ||
+                            (image.getRotation() == 270 && snake.currentMove.equals("up")) ||
+                            (image.getRotation() == 270 && snake.currentMove.equals("right"))) {
+                        image.setRotation(90);
+                    } else if ((image.getRotation() == 0 && snake.currentMove.equals("down")) ||
+                            (image.getRotation() == 270 && snake.currentMove.equals("down")) ||
+                            (image.getRotation() == 0 && snake.currentMove.equals("right")) ||
+                            (image.getRotation() == 90 && snake.currentMove.equals("right"))) {
+                        image.setRotation(180);
+                    } else if((image.getRotation() == 90 && snake.currentMove.equals("left")) ||
+                            (image.getRotation() == 180 && snake.currentMove.equals("down")) ||
+                            (image.getRotation() == 0 && snake.currentMove.equals("left")) ||
+                            (image.getRotation() == 90 && snake.currentMove.equals("down"))) {
+                        image.setRotation(270);
+                    } else if ((image.getRotation() == 180 && snake.currentMove.equals("up")) ||
+                            (image.getRotation() == 180 && snake.currentMove.equals("left")) ||
+                            (image.getRotation() == 90 && snake.currentMove.equals("up")) ||
+                            (image.getRotation() == 270 && snake.currentMove.equals("left"))){
+                        image.setRotation(0);
+                    }
+                } else {
+                    if ((image.getRotation() == 0 && snake.currentMove.equals("right")) ||
+                            (image.getRotation() == 90 && snake.currentMove.equals("up"))) {
+                        image.setRotation(90);
+                    } else if ((image.getRotation() == 0 && snake.currentMove.equals("left")) ||
+                            (image.getRotation() == 270 && snake.currentMove.equals("up"))){
+                        image.setRotation(0);
+                    } else if ((image.getRotation() == 270 && snake.currentMove.equals("down")) ||
+                            (image.getRotation() == 180 && snake.currentMove.equals("left"))) {
+                        image.setRotation(270);
+                    } else if ((image.getRotation() == 90 && snake.currentMove.equals("down")) ||
+                            (image.getRotation() == 180 && snake.currentMove.equals("right"))) {
+                        image.setRotation(180);
+                    }
+                }
+            } else {
+                image.setImageResource(R.drawable.snake_body);
+                image.setRotation(snake.image.getRotation());
+                turn = false;
+            }
         } else {
+            turned = turn;
+            if (frontBody.turned) {
+                image.setImageResource(R.drawable.snake_body_turn_right);
+                turn = true;
+            } else {
+                image.setImageResource(R.drawable.snake_body);
+                turn = false;
+            }
             image.setRotation(frontBody.lastRotation);
         }
     }

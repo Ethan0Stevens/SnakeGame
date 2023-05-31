@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Snake {
     // Déclaration des variables
     public ImageView image;
-    private String currentMove = "up";
-    private String lastMove = currentMove;
+    public String currentMove = "up";
+    public String lastMove = currentMove;
     private float moveCouldown = 0;
     private boolean dead = false;
     private Rect rect;
@@ -59,7 +59,7 @@ public class Snake {
         if (Math.abs(x) > Math.abs(y)) {
             if (x > sensibility)
                 currentMove = "up";
-            else if (x < -sensibility)
+            else if (x < -sensibility-1.5)
                 currentMove = "down";
             else
                 currentMove = lastMove;
@@ -83,6 +83,9 @@ public class Snake {
         getCurrentMove(x, y);
         if (moveCouldown <= 0 + ((snakeBodies.size()-1) / acceleration)) {
             updateMovement(currentMove);
+            for (SnakeBody body : snakeBodies) {
+                body.update();
+            }
             lastMove = currentMove;
             switch (currentMove) {
                 case "up":
@@ -105,9 +108,6 @@ public class Snake {
                     break;
             }
             checkCollisions(activity);
-            for (SnakeBody body : snakeBodies) {
-                body.update();
-            }
         }
         // Enregistre l'ancienne position du serpent
         lastPositionX = image.getX();

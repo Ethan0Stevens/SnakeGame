@@ -23,7 +23,7 @@ public class HardLeaderboardFragment extends Fragment {
     @SuppressLint({"SetTextI18n", "ResourceType"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        tableLayout = view.findViewById(R.id.easyTableLayout);
+        tableLayout = view.findViewById(R.id.hardTableLayout);
 
         DataBaseHandler tableHard = new DataBaseHandler(this.getContext(), "hard");
 

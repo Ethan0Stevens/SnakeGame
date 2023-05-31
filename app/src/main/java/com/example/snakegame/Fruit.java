@@ -60,8 +60,14 @@ public class Fruit {
         Rect activityRect = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
-        image.setX(((int)(Math.random() * (activityRect.right)/64) * 64));
-        image.setY(((int)(Math.random() * ((activityRect.bottom)/64) - 1) * 64));
+        int randomx = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.right/64) - 1));
+        int randomy = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.bottom/64) - 1));
+
+        Log.i("TAG", String.valueOf(randomx));
+        Log.i("TAG", String.valueOf(randomy));
+
+        image.setX(((int)(randomx)  * 64));
+        image.setY(((int)(randomy) * 64));
 
         ConstraintLayout layout = activity.findViewById(R.id.gameLayout); // Remplacez "layout" par l'ID de votre layout
     }

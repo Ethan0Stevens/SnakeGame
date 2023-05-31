@@ -17,6 +17,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
@@ -26,10 +28,11 @@ public class GameActivity extends AppCompatActivity {
     Activity activity;
     ArrayList<Fruit> fruits = new ArrayList<>();
     TextView scoreText;
-    ConstraintLayout constraintLayout;
+    ConstraintLayout gameOverLayout;
+    ConstraintLayout askPseudoLayout;
     int totalFruitsSpawn;
     float snakeSpeed;
-    String difficulty;
+    String difficulty = "";
 
     /**
      * Code éxectué a la creation de l'activité
@@ -63,12 +66,18 @@ public class GameActivity extends AppCompatActivity {
         activity = this;
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+
         scoreText = findViewById(R.id.scoreText);
-        constraintLayout = findViewById(R.id.gameOver);
+        scoreText.setZ(9);
+
+        gameOverLayout = findViewById(R.id.gameOver);
+        askPseudoLayout = findViewById(R.id.askPseudo);
 
         snake = new Snake(findViewById(R.id.snakeImg), this, 10, snakeSpeed);
-        fruits.add(new Fruit(this));
-        constraintLayout.setVisibility(View.INVISIBLE);
+        gameOverLayout.setVisibility(View.INVISIBLE);
+
+        askPseudoLayout.setZ(10);
+        askPseudoLayout.setVisibility(View.VISIBLE);
 
         snake.image.setX((64 * 11) + 32);
         snake.image.setY((64 * 5) + 32);
@@ -99,12 +108,18 @@ public class GameActivity extends AppCompatActivity {
      * Met fin à l'activité
      */
     public void endGame() {
-        constraintLayout.setZ(10);
-        constraintLayout.setVisibility(View.VISIBLE);
+        gameOverLayout.setZ(10);
+        gameOverLayout.setVisibility(View.VISIBLE);
 
-        if (difficulty != null) {
+        TextInputEditText textInputEditText = findViewById(R.id.pseudoTextEdit);
+
+        if (String.valueOf(textInputEditText.getText()).equals(""))
+            textInputEditText.setText("user");
+
+
+        if (!difficulty.equals("")) {
             DataBaseHandler table = new DataBaseHandler(this, difficulty);
-            table.insertScore("user", String.valueOf(snake.snakeBodies.size()));
+            table.insertScore(String.valueOf(textInputEditText.getText()), String.valueOf(snake.snakeBodies.size()));
         }
     }
 
@@ -128,10 +143,12 @@ public class GameActivity extends AppCompatActivity {
      * @param y la nouvelle posision Y du serpent
      */
     public void updateSnake(float x, float y) {
-        snake.moveSnake(x, y, activity);
-        checkCollisionWithFruit();
-        checkCollisionWithBodies();
-        verifiyIsSnakeAlive();
+        if (askPseudoLayout.getVisibility() == View.INVISIBLE) {
+            snake.moveSnake(x, y, activity);
+            checkCollisionWithFruit();
+            checkCollisionWithBodies();
+            verifiyIsSnakeAlive();
+        }
     }
 
 
@@ -207,5 +224,10 @@ public class GameActivity extends AppCompatActivity {
                 updateSnake(x, y);
         }
     };
+
+    public void hideAskPseudo(View view) {
+        askPseudoLayout.setVisibility(View.INVISIBLE);
+        fruits.add(new Fruit(this));
+    }
 }
 

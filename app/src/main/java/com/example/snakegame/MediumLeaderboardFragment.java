@@ -19,7 +19,7 @@ public class MediumLeaderboardFragment extends Fragment {
     @SuppressLint({"SetTextI18n", "ResourceType"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        tableLayout = view.findViewById(R.id.easyTableLayout);
+        tableLayout = view.findViewById(R.id.mediumTableLayout);
 
         DataBaseHandler tableMedium = new DataBaseHandler(this.getContext(), "medium");
 
