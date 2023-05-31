@@ -2,6 +2,7 @@ package com.example.snakegame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +11,22 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    ViewPager viewPager;
-
+    ViewPager2 viewPager;
+    Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new LevelPagerAdapter(this));
+        adapter = new Adapter(getSupportFragmentManager(), getLifecycle());
+
+        adapter.addFragment(new EasyLevelFragment());
+        adapter.addFragment(new MediumLevelFragment());
+        adapter.addFragment(new HardLevelFragment());
+        adapter.addFragment(new CustomLevelFragment());
+
+        viewPager.setAdapter(adapter);
     }
 
     public void startGame(View view) {
