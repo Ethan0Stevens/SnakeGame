@@ -1,6 +1,7 @@
 package com.example.snakegame;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -13,6 +14,7 @@ public class SnakeTail {
     ImageView image;
     ArrayList<SnakeBody> bodies;
     Snake snake;
+    private Rect rect;
 
     public SnakeTail(Activity activity, Snake snake, ArrayList<SnakeBody> bodies) {
         image = new ImageView(activity);
@@ -29,8 +31,24 @@ public class SnakeTail {
         this.bodies = bodies;
         this.snake = snake;
 
-        image.setX(0);
-        image.setY(0);
+        image.setX(snake.image.getX());
+        image.setY(snake.image.getY());
+
+        setRect();
+    }
+
+    /**
+     * Retourne le rectangle de collision
+     */
+    public Rect getRect() {
+        return rect;
+    }
+
+    /**
+     * Définit la taille du rectangle de collision du fruit
+     */
+    public void setRect() {
+        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
     public void update() {
@@ -51,6 +69,8 @@ public class SnakeTail {
             image.setX(body.lastPositionX);
             image.setY(body.lastPositionY);
         }
+
+        setRect();
     }
 
     public void updateRotation() {

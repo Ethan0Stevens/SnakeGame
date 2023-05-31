@@ -29,6 +29,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         database = getWritableDatabase();
         this.tableName = tableName;
         createTable(database);
+        // resetTable();
     }
 
     /**
@@ -76,10 +77,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      */
     private int getTop(SQLiteDatabase db, String score) {
         int top = 1;
+        int count = 1;
         boolean inserted = false;
 
         // Parcour chaque données de la table
         for (ArrayList<String> data: getDatas()) {
+            count++;
             // Si il y a eu un ajout en haut du top, alors mettre a jour tous les autres top
             if (inserted) {
                 ContentValues contentValues = new ContentValues();
@@ -89,8 +92,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 inserted = true;
                 ContentValues contentValues = new ContentValues();
 
-                contentValues.put("top", top + 1);
                 top = Integer.parseInt(data.get(1));
+
+                contentValues.put("top", top + 1);
                 db.update(tableName, contentValues, "ID= ?", new String[] {data.get(0)});
             }
         }
@@ -98,7 +102,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         // Si le score n'est au dessus d'aucun autre score,
         // alors le placer en derniere position
         if (!inserted)
-            top = getDatas().size() + 1;
+            top = count;
 
         return top;
     }

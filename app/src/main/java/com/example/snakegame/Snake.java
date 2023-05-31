@@ -126,15 +126,14 @@ public class Snake {
                 default:
                     break;
             }
+            tail.update();
             checkCollisions(activity);
-
         }
+
 
         // Enregistre l'ancienne position du serpent
         lastPositionX = image.getX();
         lastPositionY = image.getY();
-
-        tail.update();
 
         moveCouldown -= 0.1f; // diminue le couldown
     }

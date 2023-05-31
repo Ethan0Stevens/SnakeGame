@@ -57,7 +57,6 @@ public class SnakeBody {
         image.setX(positionX);
         image.setY(positionY);
 
-
         updateRotation();
 
         setRect();

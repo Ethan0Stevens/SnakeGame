@@ -275,6 +275,9 @@ public class GameActivity extends AppCompatActivity {
             if (snake.getRect().intersect(body.getRect()))
                 snake.die();
         }
+
+        if (snake.getRect().intersect(snake.tail.getRect()))
+            snake.die();
     }
 
     /**
