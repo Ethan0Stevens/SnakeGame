@@ -69,10 +69,10 @@ public class Snake {
      * Récupere le mouvement a appliquer en fonction de l'inclinaison du téléphone
      */
     public void getCurrentMove(float x, float y) {
-        float sensibility = 2F;
+        float sensibility = 1F;
 
         if (Math.abs(x) > Math.abs(y)) {
-            if (x > sensibility + 1.5)
+            if (x > sensibility)
                 currentMove = "up";
             else if (x < -sensibility)
                 currentMove = "down";

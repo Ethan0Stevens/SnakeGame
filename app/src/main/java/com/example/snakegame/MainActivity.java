@@ -72,10 +72,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Aller au pages de leaderboards
+     * Aller aux pages de leaderboards correspondante
      */
     public void goToLeaderboard(View view) {
+        int buttonId = view.getId();
         Intent intent = new Intent(this, LeaderBoardActivity.class);
+
+        if (buttonId == R.id.leaderboardEasyText || buttonId == R.id.LeaderboardEasyArrow) {
+            intent.putExtra("difficulty", "easy");
+        } else if (buttonId == R.id.leaderboardMediumText || buttonId == R.id.LeaderboardMediumArrow) {
+            intent.putExtra("difficulty", "medium");
+        } else if (buttonId == R.id.leaderboardHardText || buttonId == R.id.LeaderboardHardArrow) {
+            intent.putExtra("difficulty", "hard");
+        }
+
         startActivity(intent);
     }
 }

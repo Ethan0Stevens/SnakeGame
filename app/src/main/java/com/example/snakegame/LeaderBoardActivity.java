@@ -17,6 +17,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     // Déclaration des variables
     ViewPager2 viewPager;
     Adapter adapter;
+    String difficulty;
 
     /**
      * Code executé a la creation de l'activité
@@ -27,6 +28,35 @@ public class LeaderBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
 
         setViewPager();
+        getParameters();
+        setLeaderboardPage();
+    }
+
+    private void setLeaderboardPage() {
+        switch (difficulty) {
+            case "easy":
+                viewPager.setCurrentItem(0);
+                break;
+            case "medium":
+                viewPager.setCurrentItem(1);
+                break;
+            case "hard":
+                viewPager.setCurrentItem(2);
+                break;
+        }
+    }
+
+    /**
+     * Récuperation des parametres données a l'activité
+     */
+    private void getParameters() {
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            if (extras.getString("difficulty") != null) {
+                difficulty = extras.getString("difficulty");
+            }
+        }
     }
 
     /**
