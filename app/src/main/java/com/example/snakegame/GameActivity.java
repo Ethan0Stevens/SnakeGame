@@ -22,12 +22,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
+    // Déclaration des variables
     SensorManager sensorManager;
     Sensor gravity;
     Snake snake;
     Activity activity;
     ArrayList<Fruit> fruits = new ArrayList<>();
     TextView scoreText;
+    TextInputEditText pseudoTextEdit;
     ConstraintLayout gameOverLayout;
     ConstraintLayout askPseudoLayout;
     int totalFruitsSpawn;
@@ -42,6 +44,57 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        setFullScreen();
+        getParameters();
+
+        // ---------------- Initialisation des varibles ---------------
+
+        activity = this;
+
+        // Initialisation du capteur de gravité
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+
+        // Récuperer le champ qui contient le pseudo du joueur
+        pseudoTextEdit = findViewById(R.id.pseudoTextEdit);
+
+        setScoreTextView();
+        setGameOverLayout();
+        setAskPseudoLayout();
+
+        // Creation du serpent
+        snake = new Snake(findViewById(R.id.snakeImg), this, 300f, snakeSpeed);
+    }
+
+    /**
+     * Déclaration du text view du score
+     */
+    private void setScoreTextView() {
+        scoreText = findViewById(R.id.scoreText);
+        scoreText.setZ(9);
+    }
+
+    /**
+     * Déclaration du layout qui demande le pseudo du joueur
+     */
+    private void setAskPseudoLayout() {
+        askPseudoLayout = findViewById(R.id.askPseudo);
+        askPseudoLayout.setZ(10);
+    }
+
+    /**
+     * Déclaration du layout de game over
+     */
+    private void setGameOverLayout() {
+        gameOverLayout = findViewById(R.id.gameOver);
+        gameOverLayout.setZ(10);
+        gameOverLayout.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Fixe l'écran en pleine écran
+     */
+    private void setFullScreen() {
         this.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -49,8 +102,12 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
 
-
+    /**
+     * Récuperation des parametres données a l'activité
+     */
+    private void getParameters() {
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
@@ -61,28 +118,11 @@ public class GameActivity extends AppCompatActivity {
             snakeSpeed = extras.getInt("snakeSpeed");
         }
         setDifficultyParams();
-
-        // Initialisation des varibles
-        activity = this;
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-
-        scoreText = findViewById(R.id.scoreText);
-        scoreText.setZ(9);
-
-        gameOverLayout = findViewById(R.id.gameOver);
-        askPseudoLayout = findViewById(R.id.askPseudo);
-
-        snake = new Snake(findViewById(R.id.snakeImg), this, 300f, snakeSpeed);
-        gameOverLayout.setVisibility(View.INVISIBLE);
-
-        askPseudoLayout.setZ(10);
-        askPseudoLayout.setVisibility(View.VISIBLE);
-
-        snake.image.setX((64 * 11) + 32);
-        snake.image.setY((64 * 5) + 32);
     }
 
+    /**
+     * Définir les parametre du serpent en fonction du niveau de difficulté
+     */
     public void setDifficultyParams() {
         switch (difficulty) {
             case "easy":
@@ -100,29 +140,46 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Relancer le jeu
+     */
     public void reloadGame(View view) {
         recreate();
     }
 
     /**
-     * Met fin à l'activité
+     * Met fin au jeu
      */
     public void endGame() {
-        gameOverLayout.setZ(10);
         gameOverLayout.setVisibility(View.VISIBLE);
 
-        TextInputEditText textInputEditText = findViewById(R.id.pseudoTextEdit);
+        verifyPseudo();
+        saveScore();
+    }
 
-        if (String.valueOf(textInputEditText.getText()).equals(""))
-            textInputEditText.setText("user");
+    /**
+     * Vérifie que le pseudo ne soit pas vide, sinon le remplire par 'user'
+     */
+    @SuppressLint("SetTextI18n")
+    private void verifyPseudo() {
+        // Si le champs est vide alors le remplacer par 'user'
+        if (String.valueOf(pseudoTextEdit.getText()).equals(""))
+            pseudoTextEdit.setText("user");
+    }
 
-
+    /**
+     * Ajouter le score de la partie a la tables des scores corréspondante au mode de jeu
+     */
+    private void saveScore() {
         if (!difficulty.equals("")) {
             DataBaseHandler table = new DataBaseHandler(this, difficulty);
-            table.insertScore(String.valueOf(textInputEditText.getText()), String.valueOf(snake.snakeBodies.size()));
+            table.insertScore(String.valueOf(pseudoTextEdit.getText()), String.valueOf(snake.snakeBodies.size()));
         }
     }
 
+    /**
+     * Mettre fin a l'activité
+     */
     public void exitActivity(View view) {
         finish();
     }
@@ -159,18 +216,19 @@ public class GameActivity extends AppCompatActivity {
      */
     public void checkCollisionWithFruit() {
         ArrayList<Fruit> fruitsToRemove = new ArrayList<>();
+
+        // Detecter si le serpent touche un fruit
         for (Fruit fruit : fruits) {
             if (snake.getRect().intersect(fruit.getRect())) {
-                fruit.delete();
-                fruitsToRemove.add(fruit);
-                snake.addBody(); // Ajouter une partie du corps au serpent
+                eatFruit(fruit, fruitsToRemove);
             }
         }
+
+        // Supprimer les fruits a supprimer
         for (Fruit fruit : fruitsToRemove) {
-            incrementScore();
             fruits.remove(fruit);
 
-            // Ajouter un nouveau fruit a la liste des fruits
+            // ajouter le nombre de fruit nécessaire pour arriver au total de fruits
             if (fruits.size() <= 0) {
                 for (int i = totalFruitsSpawn-1; i > 0; i--) {
                     addFruit();
@@ -180,10 +238,28 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Manger un fruit
+     * @param fruit fruit a supprimer
+     * @param fruitsToRemove liste de fruits a supprimer
+     */
+    public void eatFruit(Fruit fruit, ArrayList<Fruit> fruitsToRemove) {
+        fruitsToRemove.add(fruit); // ajouter le fruit a une liste de fruits a supprimer
+        fruit.delete(); // supprimer l'image du fruit
+        snake.addBody(); // Ajouter une partie du corps au serpent
+        incrementScore();
+    }
+
+    /**
+     * Ajouter un fruit a la liste de fruits
+     */
     private void addFruit() {
         fruits.add(new Fruit(activity, fruits, snake.snakeBodies));
     }
 
+    /**
+     * Incrementation de l'affichage du score
+     */
     public void incrementScore() {
         int score = Integer.parseInt((String) scoreText.getText());
         score++;
@@ -229,6 +305,9 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Cacher le layout qui demande un pseudo avant la partie
+     */
     public void hideAskPseudo(View view) {
         askPseudoLayout.setVisibility(View.INVISIBLE);
         addFruit();

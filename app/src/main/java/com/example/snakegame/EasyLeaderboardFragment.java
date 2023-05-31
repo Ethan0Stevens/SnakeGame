@@ -22,6 +22,7 @@ public class EasyLeaderboardFragment extends Fragment {
         tableLayout = view.findViewById(R.id.easyTableLayout);
 
         DataBaseHandler tableEasy = new DataBaseHandler(this.getContext(), "easy");
+        // tableEasy.resetTable();
 
         LeaderBoardActivity.displayLeaderboard(tableEasy, view, tableLayout);
     }

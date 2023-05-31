@@ -32,6 +32,11 @@ public class Snake {
         this.acceleration = acceleration;
         activity = newActivity;
         image = snakeImg;
+
+        // Position de départ du serpent
+        image.setX((64 * 11) + 32);
+        image.setY((64 * 5) + 32);
+
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 

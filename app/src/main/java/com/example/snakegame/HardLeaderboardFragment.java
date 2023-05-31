@@ -26,6 +26,7 @@ public class HardLeaderboardFragment extends Fragment {
         tableLayout = view.findViewById(R.id.hardTableLayout);
 
         DataBaseHandler tableHard = new DataBaseHandler(this.getContext(), "hard");
+        // tableHard.resetTable();
 
         LeaderBoardActivity.displayLeaderboard(tableHard, view, tableLayout);
     }

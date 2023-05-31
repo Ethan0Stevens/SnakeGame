@@ -40,7 +40,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void resetTable() {
         SQLiteDatabase db = getWritableDatabase();
-        onUpgrade(db, 0, 0);
+        db.execSQL("Drop Table IF EXISTS " + tableName);
         createTable(db);
     }
 
