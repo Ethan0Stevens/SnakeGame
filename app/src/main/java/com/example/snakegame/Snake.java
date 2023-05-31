@@ -2,6 +2,7 @@ package com.example.snakegame;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -81,7 +82,8 @@ public class Snake {
      */
     public void moveSnake(float x, float y, Activity activity) {
         getCurrentMove(x, y);
-        if (moveCouldown <= 0 + ((snakeBodies.size()-1) / acceleration)) {
+        Log.i("TAG", String.valueOf(((snakeBodies.size()-1) / acceleration)));
+        if (moveCouldown <= ((snakeBodies.size()-1) / acceleration)) {
             updateMovement(currentMove);
             for (SnakeBody body : snakeBodies) {
                 body.update();
@@ -113,7 +115,7 @@ public class Snake {
         lastPositionX = image.getX();
         lastPositionY = image.getY();
 
-        moveCouldown -= 1; // diminue le couldown de 1
+        moveCouldown -= 0.1f; // diminue le couldown de 1
     }
 
     /**
@@ -122,7 +124,7 @@ public class Snake {
     public void resetMove() {
         updateRotation();
         currentMove = "";
-        moveCouldown = defaultSpeed;
+        moveCouldown = defaultSpeed/100f;
     }
 
     /**

@@ -17,8 +17,9 @@ public class Fruit {
     Rect rect;
     ConstraintLayout constraintLayout;
     Activity activity;
-
     ArrayList<Fruit> fruits;
+    ArrayList<SnakeBody> bodies;
+
     int randomx;
     int randomy;
 
@@ -26,9 +27,10 @@ public class Fruit {
      * Constructeur de la class Fruit
      * @param newActivity l'activité du fruit
      */
-    public Fruit(Activity newActivity, ArrayList<Fruit> fruits) {
+    public Fruit(Activity newActivity, ArrayList<Fruit> fruits, ArrayList<SnakeBody> bodies) {
         activity = newActivity;
         this.fruits = fruits;
+        this.bodies = bodies;
 
         setImage();
         updateFruit();
@@ -67,6 +69,12 @@ public class Fruit {
                 updateFruit();
             }
         }
+
+        for (SnakeBody body : bodies) {
+            if (rect.intersect(body.getRect())) {
+                updateFruit();
+            }
+        }
     }
 
     /**
@@ -80,10 +88,7 @@ public class Fruit {
         int randomx = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.right/64) - 1));
         int randomy = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.bottom/64) - 1));
 
-        Log.i("TAG", String.valueOf(randomx));
-        Log.i("TAG", String.valueOf(randomy));
-
-        image.setX(((4)  * 64));
+        image.setX(((randomx)  * 64));
         image.setY(((randomy) * 64));
 
         setRect();

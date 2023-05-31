@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity {
         gameOverLayout = findViewById(R.id.gameOver);
         askPseudoLayout = findViewById(R.id.askPseudo);
 
-        snake = new Snake(findViewById(R.id.snakeImg), this, 10, snakeSpeed);
+        snake = new Snake(findViewById(R.id.snakeImg), this, 300f, snakeSpeed);
         gameOverLayout.setVisibility(View.INVISIBLE);
 
         askPseudoLayout.setZ(10);
@@ -87,15 +87,15 @@ public class GameActivity extends AppCompatActivity {
         switch (difficulty) {
             case "easy":
                 totalFruitsSpawn = 4;
-                snakeSpeed = 10;
+                snakeSpeed = 70;
                 break;
             case "medium":
                 totalFruitsSpawn = 3;
-                snakeSpeed = 7;
+                snakeSpeed = 50;
                 break;
             case "hard":
                 totalFruitsSpawn = 2;
-                snakeSpeed = 5;
+                snakeSpeed = 30;
                 break;
         }
     }
@@ -181,7 +181,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void addFruit() {
-        fruits.add(new Fruit(activity, fruits));
+        fruits.add(new Fruit(activity, fruits, snake.snakeBodies));
     }
 
     public void incrementScore() {
