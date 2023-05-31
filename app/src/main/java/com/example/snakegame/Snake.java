@@ -37,7 +37,7 @@ public class Snake {
         image.setX((64 * 11) + 32);
         image.setY((64 * 5) + 32);
 
-        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
+        setRect();
     }
 
     /**
@@ -54,6 +54,13 @@ public class Snake {
         SnakeBody body = new SnakeBody(activity, this, snakeBodies.size(), snakeBodies);
         snakeBodies.add(body);
 
+    }
+
+    /**
+     * Met a jour le rectangle de collision de la tete du serpent
+     */
+    private void setRect() {
+        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
     /**
@@ -87,12 +94,15 @@ public class Snake {
      */
     public void moveSnake(float x, float y, Activity activity) {
         getCurrentMove(x, y);
-        Log.i("TAG", String.valueOf(((snakeBodies.size()-1) / acceleration)));
+
         if (moveCouldown <= ((snakeBodies.size()-1) / acceleration)) {
             updateMovement(currentMove);
+
+            // Met a jour la position de chaque partie du corps
             for (SnakeBody body : snakeBodies) {
                 body.update();
             }
+
             lastMove = currentMove;
             switch (currentMove) {
                 case "up":
@@ -120,7 +130,7 @@ public class Snake {
         lastPositionX = image.getX();
         lastPositionY = image.getY();
 
-        moveCouldown -= 0.1f; // diminue le couldown de 1
+        moveCouldown -= 0.1f; // diminue le couldown
     }
 
     /**
@@ -195,8 +205,7 @@ public class Snake {
         Rect activityRect = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
-        // Met a jour le rectangle de collision de la tete du serpent
-        rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
+        setRect();
 
         // Si le serpent touche un murs alors il meurt
         if (image.getX() < 0 || image.getX() > activityRect.right - image.getWidth() || image.getY() < 0 || image.getY() > activityRect.bottom - image.getHeight()) {

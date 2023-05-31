@@ -1,18 +1,20 @@
 package com.example.snakegame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    // Déclaration des variables
     ViewPager2 viewPager;
     Adapter adapter;
+
+    /**
+     * Code executé a la creation de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Démarre le jeu avec le bon parametre de difficulté
+     */
     public void startGame(View view) {
-
         int buttonId = view.getId();
         Intent intent = new Intent(this, GameActivity.class);
 
@@ -45,32 +49,33 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Swipe d'une page vers la droite
+     */
     public void jumpToNextPage(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 
+    /**
+     * Swipe d'une page vers la gauche
+     */
     public void jumpToPreviousPage(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 
+    /**
+     * Lancer le jeu en mode personnalisé
+     */
     public void startCustomGame(View view) {
         Intent intent = new Intent(this, CustomGameActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Aller au pages de leaderboards
+     */
     public void goToLeaderboard(View view) {
-
-        int viewId = view.getId();
         Intent intent = new Intent(this, LeaderBoardActivity.class);
-
-        if (viewId == R.id.leaderboardEasyText || viewId == R.id.LeaderboardEasyArrow) {
-            intent.putExtra("difficulty", "easy");
-        } else if (viewId == R.id.leaderboardMediumText || viewId == R.id.LeaderboardMediumArrow) {
-            intent.putExtra("difficulty", "medium");
-        } else if (viewId == R.id.leaderboardHardText || viewId == R.id.LeaderboardHardArrow) {
-            intent.putExtra("difficulty", "hard");
-        }
-
         startActivity(intent);
     }
 }

@@ -80,19 +80,18 @@ public class CustomGameActivity  extends AppCompatActivity {
         @SuppressLint("SetTextI18n")
         public void onProgressChanged(SeekBar seekBar, int progress,
                                       boolean fromUser) {
-            //set textView's text
 
-            if (progress > seekBar.getMax()/2 + 2) {
+            if (progress > seekBar.getMax()/2 + 10) {
                 accelerationValueText.setText("Faible");
-            } else if (progress < seekBar.getMax()/2 - 2) {
+            } else if (progress < seekBar.getMax()/2 - 10) {
                 accelerationValueText.setText("Forte");
             } else {
                 accelerationValueText.setText("Moyenne");
             }
 
-            if (progress == seekBar.getMax()) {
+            if (progress >= seekBar.getMax() - 10) {
                 accelerationValueText.setText("Tres Faible");
-            } else if (progress == 0) {
+            } else if (progress <= 10) {
                 accelerationValueText.setText("Très Forte");
             }
 

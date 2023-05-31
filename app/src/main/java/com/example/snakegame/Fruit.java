@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Fruit {
     // Déclaration des variables de la class Fruit
@@ -19,9 +20,6 @@ public class Fruit {
     Activity activity;
     ArrayList<Fruit> fruits;
     ArrayList<SnakeBody> bodies;
-
-    int randomx;
-    int randomy;
 
     /**
      * Constructeur de la class Fruit
@@ -60,16 +58,22 @@ public class Fruit {
         constraintLayout.addView(image);
     }
 
-
+    /**
+     * Place le fruit sur le jeu,
+     * si il apparait sur un autre fruit, alors le replacer et ainsi de suite,
+     * si il apparait sur une partie du corps du serpent, alors le replacer et ainsi de suite
+     */
     public void updateFruit() {
         setRandomPosition();
 
+        // Detection des collision avec les autres fruits
         for (Fruit fruit : fruits) {
             if (rect.intersect(fruit.getRect())) {
                 updateFruit();
             }
         }
 
+        // Detection des collision avec le serpent
         for (SnakeBody body : bodies) {
             if (rect.intersect(body.getRect())) {
                 updateFruit();
@@ -85,11 +89,12 @@ public class Fruit {
         Rect activityRect = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
-        int randomx = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.right/64) - 1));
-        int randomy = (int) ((Math.round(Math.random() * 10) / 10D) * ((activityRect.bottom/64) - 1));
+        Random random = new Random();
+        int randomx = random.nextInt(activityRect.right/64 - 1);
+        int randomy = random.nextInt(activityRect.bottom/64 - 1);
 
-        image.setX(((randomx)  * 64));
-        image.setY(((randomy) * 64));
+        image.setX(randomx * 64);
+        image.setY(randomy * 64);
 
         setRect();
     }
