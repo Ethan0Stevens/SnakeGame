@@ -69,22 +69,19 @@ public class Snake {
      * Récupere le mouvement a appliquer en fonction de l'inclinaison du téléphone
      */
     public void getCurrentMove(float x, float y) {
-        float sensibility = 1F;
+        float sensibility = 1.5F;
 
         if (Math.abs(x) > Math.abs(y)) {
+
             if (x > sensibility + 0.5)
                 currentMove = "up";
             else if (x < -sensibility)
-                currentMove = "down";
-            else
-                currentMove = lastMove;
+                currentMove = "down";;
         } else {
             if (y < -sensibility)
                 currentMove = "right";
             else if (y > sensibility)
                 currentMove = "left";
-            else
-                currentMove = lastMove;
         }
     }
 
@@ -96,9 +93,9 @@ public class Snake {
      */
     public void moveSnake(float x, float y, Activity activity) {
         getCurrentMove(x, y);
+        updateMovement(currentMove);
 
         if (moveCouldown <= ((snakeBodies.size()-1) / acceleration)) {
-            updateMovement(currentMove);
 
             // Met a jour la position de chaque partie du corps
             for (SnakeBody body : snakeBodies) {
@@ -143,7 +140,7 @@ public class Snake {
      */
     public void resetMove() {
         updateRotation();
-        currentMove = "";
+        currentMove = lastMove;
         moveCouldown = defaultSpeed/100f;
     }
 

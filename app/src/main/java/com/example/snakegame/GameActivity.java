@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -305,6 +306,7 @@ public class GameActivity extends AppCompatActivity {
 
             if (!snake.isDead())
                 updateSnake(x, y);
+
         }
     };
 
