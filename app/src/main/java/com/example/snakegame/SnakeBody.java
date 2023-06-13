@@ -10,6 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
 public class SnakeBody {
+    final int TILE_SIZE = 64;
+
     // Déclaration des variables de la class SnakeBody
     ImageView image;
     Rect rect;
@@ -41,7 +43,7 @@ public class SnakeBody {
         image.setImageResource(R.drawable.snake_body);
 
         // Appliquez les nouveaux paramètres de mise en page à l'ImageView
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(TILE_SIZE, TILE_SIZE);
         image.setLayoutParams(layoutParams);
 
         this.bodyPosition = bodyPosition;
@@ -142,25 +144,22 @@ public class SnakeBody {
             rotation = (int) frontBody.image.getRotation();
         }
 
-        // Taille d'une tuile de jeu
-        int squareSize = snake.image.getWidth();
-
         // Placer la partie du corps en fonction de la rotation de la partie qui se trouve devant
         switch (rotation) {
             case 180:
                 positionX = x;
-                positionY = y - squareSize;
+                positionY = y - TILE_SIZE;
                 break;
             case 0:
                 positionX = x;
-                positionY = y + squareSize;
+                positionY = y + TILE_SIZE;
                 break;
             case 90:
-                positionX = x - squareSize;
+                positionX = x - TILE_SIZE;
                 positionY = y;
                 break;
             case 270:
-                positionX = x + squareSize;
+                positionX = x + TILE_SIZE;
                 positionY = y;
                 break;
         }

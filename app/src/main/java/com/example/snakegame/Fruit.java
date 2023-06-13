@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Fruit {
+
+    final int TILE_SIZE = 64;
+
     // Déclaration des variables de la class Fruit
     ImageView image;
     Rect rect;
@@ -46,7 +49,7 @@ public class Fruit {
         image.setImageResource(R.drawable.devil_fruit);
 
         // Appliquez les nouveaux paramètres de mise en page à l'ImageView
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(TILE_SIZE, TILE_SIZE);
         image.setLayoutParams(layoutParams);
     }
 
@@ -90,11 +93,11 @@ public class Fruit {
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(activityRect);
 
         Random random = new Random();
-        int randomx = random.nextInt(activityRect.right/64 - 1);
-        int randomy = random.nextInt(activityRect.bottom/64 - 1);
+        int randomx = random.nextInt(activityRect.right/TILE_SIZE - 1);
+        int randomy = random.nextInt(activityRect.bottom/TILE_SIZE - 1);
 
-        image.setX(randomx * 64);
-        image.setY(randomy * 64);
+        image.setX(randomx * TILE_SIZE);
+        image.setY(randomy * TILE_SIZE);
 
         setRect();
     }
@@ -103,7 +106,10 @@ public class Fruit {
      * Définit la taille du rectangle de collision du fruit
      */
     private void setRect() {
-        rect = new Rect((int) image.getX() + 2, (int) image.getY() + 2, (int) (image.getX() + 60), (int) (image.getY() + 60));
+        rect = new Rect((int) image.getX() + 2,
+                        (int) image.getY() + 2,
+                            (int) (image.getX() + TILE_SIZE-4),
+                            (int) (image.getY() + TILE_SIZE-4));
     }
 
     /**

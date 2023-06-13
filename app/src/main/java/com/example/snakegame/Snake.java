@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class Snake {
+    final int TILE_SIZE = 64;
+
     // Déclaration des variables
     public ImageView image;
     public String currentMove = "up";
@@ -35,8 +37,8 @@ public class Snake {
         image = snakeImg;
 
         // Position de départ du serpent
-        image.setX((64 * 11) + 32);
-        image.setY((64 * 5) + 32);
+        image.setX((TILE_SIZE * 11) + TILE_SIZE/2f);
+        image.setY((TILE_SIZE * 5) + TILE_SIZE/2f);
 
         setRect();
 

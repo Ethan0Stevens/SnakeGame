@@ -10,6 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
 public class SnakeTail {
+    final int TILE_SIZE = 64;
+
     // Déclaration des variables
     ImageView image;
     ArrayList<SnakeBody> bodies;
@@ -21,7 +23,7 @@ public class SnakeTail {
         image.setImageResource(R.drawable.snake_tail);
 
         // Appliquez les nouveaux paramètres de mise en page à l'ImageView
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(64, 64);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(TILE_SIZE, TILE_SIZE);
         image.setLayoutParams(layoutParams);
 
         // Placer l'image sur le layout
@@ -51,6 +53,9 @@ public class SnakeTail {
         rect = new Rect((int) image.getX(), (int) image.getY(), (int) (image.getX() + image.getWidth()), (int) (image.getY() + image.getHeight()));
     }
 
+    /**
+     * Met à jour tout ce qui concerne le fonctionnement de la queue du serpent
+     */
     public void update() {
         updatePosition();
         updateRotation();
@@ -73,6 +78,9 @@ public class SnakeTail {
         setRect();
     }
 
+    /**
+     * Met a jour la rotation de la queue du serpent
+     */
     public void updateRotation() {
         if (bodies.size() == 0){
             image.setRotation(snake.image.getRotation());
